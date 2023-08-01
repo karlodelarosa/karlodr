@@ -63,7 +63,7 @@ const scrollToTop = () => {
       </div>
     </div>
 
-    <div id="about" class="max-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div id="about" class="min-h-screen bg-black py-[50px] lg:py-[100px]">
       <div class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -91,8 +91,8 @@ const scrollToTop = () => {
       
     </div>
 
-    <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto"
+    <div class="min-h-screen bg-black py-[50px] lg:py-[100px] px-[20px]">
+      <div class="lg:max-w-7xl lg:mx-auto "
         v-motion
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
@@ -109,7 +109,7 @@ const scrollToTop = () => {
       </div>
     </div>
 
-    <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div class="min-h-screen bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -136,7 +136,7 @@ const scrollToTop = () => {
       </div>
     </div>
 
-    <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div class="min-h-screen bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -153,7 +153,7 @@ const scrollToTop = () => {
       </div>
     </div>
 
-    <div class="min-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div class="min-h-screen bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -179,7 +179,7 @@ const scrollToTop = () => {
       </div>
     </div>
 
-    <div class="min-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div class="min-h-screen bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
