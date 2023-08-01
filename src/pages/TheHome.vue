@@ -44,7 +44,12 @@ const about = '/about.png'
     </div>
 
     <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12">
+      <div class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <div class="md:col-span-4">
           <img :src="about" alt="About us">
         </div>
@@ -67,7 +72,12 @@ const about = '/about.png'
     </div>
 
     <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto">
+      <div class="lg:max-w-7xl lg:mx-auto"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <h2 class="section-title text-white font-extra-bold text-left">EXPERTISE</h2>
 
         <div class="py-[30px] flex flex-col gap-[30px]">
@@ -80,7 +90,12 @@ const about = '/about.png'
     </div>
 
     <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto">
+      <div class="lg:max-w-7xl lg:mx-auto"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <h2 class="section-title text-white font-extra-bold text-left">EXPERIENCE</h2>
 
         <div class="py-[30px] lg:w-7/12 lg:mx-auto">
@@ -102,7 +117,12 @@ const about = '/about.png'
     </div>
 
     <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto">
+      <div class="lg:max-w-7xl lg:mx-auto"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <h2 class="section-title text-white font-extra-bold text-left">STACK</h2>
 
         <div class="py-[30px] lg:w-7/12 lg:mx-auto">
@@ -114,7 +134,12 @@ const about = '/about.png'
     </div>
 
     <div class="min-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto">
+      <div class="lg:max-w-7xl lg:mx-auto"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <h2 class="section-title text-white font-extra-bold text-left">PROJECTS</h2>
 
         <div class="py-[30px]">
@@ -135,7 +160,12 @@ const about = '/about.png'
     </div>
 
     <div class="min-h-screen bg-black py-[50px] lg:py-[100px]">
-      <div class="lg:max-w-7xl lg:mx-auto">
+      <div class="lg:max-w-7xl lg:mx-auto"
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+        :delay="300"
+      >
         <h2 class="section-title text-white font-extra-bold text-left">CONTRIBUTIONS</h2>
 
         <div class="py-[30px] w-full">
