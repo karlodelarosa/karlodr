@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import ArrowDown from '../components/svg/ArrowDown.vue'
 import ArrowDownBlack from '../components/svg/ArrowDownBlack.vue'
-import BigArrowDown from '../components/svg/BigArrowDown.vue'
-import MenuIcon from '../components/svg/MenuIcon.vue'
 import Amplifier from '../components/svg/Amplifier.vue'
 import GameController from '../components/svg/GameController.vue'
 import Television from '../components/svg/Television.vue'
@@ -10,6 +8,7 @@ import OpenLink from '../components/svg/OpenLink.vue'
 import LinkedIn from '../components/svg/LinkedIn.vue'
 import Facebook from '../components/svg/Facebook.vue'
 import Github from '../components/svg/Github.vue'
+import LinkedInWhite from '../components/svg/LinkedInWhite.vue'
 
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA} from '../data/experience'
@@ -19,11 +18,18 @@ import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
 const about = '/about.png'
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
 </script>
 
 <template>
   <main class="w-full">
-    <div class="bg-black min-h-screen">
+    <div id="top" class="bg-black min-h-screen">
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
 
         <!-- Nav -->
@@ -32,18 +38,32 @@ const about = '/about.png'
             <img :src="logo" class="w-[50px]">
             <h1 class="text-white text-lg">karlodr.dev</h1>
           </div>
-          <MenuIcon class="ml-auto"/>
+          <!-- <MenuIcon class="ml-auto"/> -->
+          <div class="flex flex-row gap-[30px] items-center justify-center">
+            <a class="w-[20px]" target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedInWhite/></a>
+          </div>
         </div>
         
         <!-- End of Nav -->
 
-        <h1 class="hero-text h-screen flex items-center justify-center">JKDR</h1>
+        <div class=" h-screen flex flex-col items-start justify-center md:items-center">
+          <h1 class="hero-text text-glow">JKDR</h1>
+          <p class="text-white font-bold lg:tracking-[20px] pt-[50px] md:pt-0" 
+            v-motion
+            :initial="{ opacity: 0, y: -20 }"
+            :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
+            :delay="1300"
+          >FRONTEND DEVELOPER</p>
+        </div>
+        
 
-        <ArrowDown class="absolute bottom-10 right-10 lg:right-[50%] lg:left-[50%] animate-bounce"/>
+        <a href="#about" class="absolute bottom-10 right-10 lg:right-[50%] lg:left-[50%] animate-pulse cursor-pointer">
+          <ArrowDown/>
+        </a>
       </div>
     </div>
 
-    <div class="max-h-screen bg-black py-[50px] lg:py-[100px]">
+    <div id="about" class="max-h-screen bg-black py-[50px] lg:py-[100px]">
       <div class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -65,7 +85,7 @@ const about = '/about.png'
             <Television/>
           </div>
 
-          <BigArrowDown class="ml-auto"/>
+          <!-- <BigArrowDown class="ml-auto"/> -->
         </div>
       </div>
       
@@ -192,12 +212,13 @@ const about = '/about.png'
         </div>
 
         <div class="flex flex-row gap-[30px] items-center justify-center mb-[50px]">
-          <LinkedIn/>
-          <Facebook/>
-          <Github/>
+          <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedIn/></a>
+          <a target="_blank" href="https://www.facebook.com/karlodrr/"><Facebook/></a>
+          <a target="_blank" href="https://github.com/karlodelarosa"><Github/></a>
         </div>
 
-        <ArrowDownBlack class="rotate-180 mx-auto"/>
+        <ArrowDownBlack @click="scrollToTop()" class="rotate-180 mx-auto cursor-pointer active:scale-95"/>
+        
       </div>
     </div>
   </main>
@@ -226,6 +247,10 @@ const about = '/about.png'
     line-height: 1;
     animation: clearer 1.5s ease-in, toVertical 3s ease;
   }
+}
+
+.text-glow {
+  text-shadow: rgba(255,255,255,0.4) 0px 0px 20px;
 }
 
 @keyframes clearer {
