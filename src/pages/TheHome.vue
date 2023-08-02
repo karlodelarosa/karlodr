@@ -10,6 +10,7 @@ import Facebook from '../components/svg/Facebook.vue'
 import Github from '../components/svg/Github.vue'
 import LinkedInWhite from '../components/svg/LinkedInWhite.vue'
 
+import { ABOUT_DATA } from '../data/about'
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA} from '../data/experience'
 import { STACK_DATA } from '../data/stack'
@@ -29,26 +30,21 @@ const scrollToTop = () => {
 
 <template>
   <main class="w-full">
+
+    <div class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-black/70">
+      <div @click="scrollToTop()" class="flex flex-row items-center gap-2">
+        <img :src="logo" class="w-[50px]">
+        <h1 class="text-white text-lg">karlodr.dev</h1>
+      </div>
+      <!-- <MenuIcon class="ml-auto"/> -->
+      <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedInWhite/></a>
+    </div>
+
     <div id="top" class="bg-black min-h-screen">
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
-
-        <!-- Nav -->
-        <div class="w-full flex flex-row justify-between items-center absolute top-0 py-3">
-          <div class="flex flex-row items-center gap-2">
-            <img :src="logo" class="w-[50px]">
-            <h1 class="text-white text-lg">karlodr.dev</h1>
-          </div>
-          <!-- <MenuIcon class="ml-auto"/> -->
-          <div class="flex flex-row gap-[30px] items-center justify-center">
-            <a class="w-[20px]" target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedInWhite/></a>
-          </div>
-        </div>
-        
-        <!-- End of Nav -->
-
-        <div class=" h-screen flex flex-col items-start justify-center md:items-center">
+        <div class=" h-screen flex flex-col items-center justify-center">
           <h1 class="hero-text text-glow">JKDR</h1>
-          <p class="text-white font-bold lg:tracking-[20px] pt-[50px] md:pt-0" 
+          <p class="text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text" 
             v-motion
             :initial="{ opacity: 0, y: -20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
@@ -56,9 +52,8 @@ const scrollToTop = () => {
           >FRONTEND DEVELOPER</p>
         </div>
         
-
-        <a href="#about" class="absolute bottom-10 right-10 lg:right-[50%] lg:left-[50%] animate-pulse cursor-pointer">
-          <ArrowDown/>
+        <a href="#about" class="absolute bottom-10 left-0 right-0  animate-pulse cursor-pointer">
+          <ArrowDown class="mx-auto"/>
         </a>
       </div>
     </div>
@@ -75,9 +70,9 @@ const scrollToTop = () => {
         </div>
 
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
-          <h2 class="section-title text-white font-extra-bold text-center mb-[40px] md:text-left">ABOUT</h2>
-          <p class="text-white mb-[30px] text-[18px] font-light">Hi! I am Karlo, problem solver, explorer, passionate software developer, and also a Frontend developer who loves to create design that will users enjoy.</p>
-          <p class="text-white mb-[50px] text-[18px] font-light">I love games, coffee, anime, and dogs!</p>
+          <h2 class="section-title text-white font-extra-bold text-left mb-[40px]">ABOUT</h2>
+          <p class="text-white mb-[30px] text-[18px] font-light">{{ ABOUT_DATA.main_description }}</p>
+          <p class="text-white mb-[50px] text-[18px] font-light">{{ ABOUT_DATA.sub_description }}</p>
 
           <div class="flex flex-row items-center justify-between md:justify-normal md:gap-[30px] px-[15px]">
             <GameController/>
@@ -226,14 +221,15 @@ const scrollToTop = () => {
 
 <style scoped>
 .hero-text {
-  text-orientation: upright;
-  writing-mode: vertical-rl;
-  letter-spacing: -60px;
+  /* text-orientation: sideways-right;
+    writing-mode: horizontal-tb;
+    letter-spacing: 20px; */
+  letter-spacing: 10px;
   color: #fff;
-  font-size: 170px;
+  font-size: 100px;
   font-weight: 900;
   line-height: 1;
-  animation: clearer 1.5s ease-in
+  animation: clearer 1.5s ease-in, toVerticalXsSm 3s ease;
 }
 
 @media screen and (min-width: 768px) {
@@ -249,19 +245,31 @@ const scrollToTop = () => {
   }
 }
 
+.position-text {
+  text-shadow: rgba(255,255,255,0.4) 0px 0px 20px;
+}
+
 .text-glow {
   text-shadow: rgba(255,255,255,0.4) 0px 0px 20px;
 }
 
 @keyframes clearer {
   from {
-    /* text-shadow: rgba(255,255,255,0.4) 0px 0px 15px; */
     filter: blur(10px);
   }
 
   to {
-    /* text-shadow: rgba(255,255,255,0.4) 0px 0px 72px; */
     filter: blur(0);
+  }
+}
+
+@keyframes toVerticalXsSm {
+  from {
+    letter-spacing: -60px;
+  }
+
+  to {
+    letter-spacing: 10px;
   }
 }
 
