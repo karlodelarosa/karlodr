@@ -44,7 +44,7 @@ const scrollToTop = () => {
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
         <div class=" h-screen flex flex-col items-center justify-center">
           <h1 class="hero-text text-glow">JKDR</h1>
-          <p class="text-teal-500 font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text" 
+          <p class="text-teal-500 font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow" 
             v-motion
             :initial="{ opacity: 0, y: -20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
@@ -251,7 +251,7 @@ const scrollToTop = () => {
 }
 
 .text-glow {
-  text-shadow: rgba(255,255,255,0.4) 0px 0px 20px;
+  text-shadow: rgba(255,255,255,0.4) 0px 0px 40px;
 }
 
 @keyframes clearer {
