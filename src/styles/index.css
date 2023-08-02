@@ -57,7 +57,7 @@
 
 html {
   scroll-behavior: smooth;
-  cursor: url('../public/circle.svg'), auto;
+  cursor: url('../circle.svg'), auto;
 }
 
 body {
