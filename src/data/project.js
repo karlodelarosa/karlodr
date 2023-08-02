@@ -15,6 +15,11 @@ export const PROJECT_DATA = [
     thumbnail: '/projects/records_thumbnail.png'
   },
   {
+    title: 'Sprint Board',
+    description: 'Project management tool',
+    thumbnail: '/projects/pm_thumbnail.png'
+  },
+  {
     title: 'Cat Browser',
     description: 'Browse cat breeds',
     thumbnail: '/projects/cat_thumbnail.png'
