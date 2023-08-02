@@ -33,7 +33,7 @@ const scrollToTop = () => {
 
     <div class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-black/70">
       <div @click="scrollToTop()" class="flex flex-row items-center gap-2">
-        <img :src="logo" class="w-[50px]">
+        <img :src="logo" class="w-[50px]" alt="Karlo Dela Rosa | Logo">
         <h1 class="text-white text-lg">karlodr.dev</h1>
       </div>
       <!-- <MenuIcon class="ml-auto"/> -->
@@ -66,7 +66,7 @@ const scrollToTop = () => {
         :delay="300"
       >
         <div class="md:col-span-4">
-          <img :src="about" alt="About us" class="grayscale hover:grayscale-0 transition-all duration-300">
+          <img :src="about" alt="Karlo Dela Rosa | About us" class="grayscale hover:grayscale-0 transition-all duration-300">
         </div>
 
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
@@ -161,7 +161,7 @@ const scrollToTop = () => {
           <div class="grid grid-cols-1 md:grid-cols-12 gap-[15px]">
             <div class="card-container w-full md:col-span-4" v-for="project in PROJECT_DATA">
               <div class="image-container overflow-hidden h-[150px]">
-                <img :src="project.thumbnail" alt="" class="w-full brightness-50 hover:brightness-100 hover:scale-110 transition-all duration-500">
+                <img :src="project.thumbnail" alt="Karlo Dela Rosa | Project thumbnail" class="w-full brightness-50 hover:brightness-100 hover:scale-110 transition-all duration-500">
               </div>
 
               <div class="content-container bg-white py-3 px-2 text-center">
@@ -198,7 +198,7 @@ const scrollToTop = () => {
     </div>
 
     <div class="py-[50px] px-[20px] bg-white">
-      <img :src="logo" class="mx-auto mb-[30px]">
+      <img :src="logo" class="mx-auto mb-[30px]" alt="Karlo Dela Rosa | Logo">
 
       <div class="py-[30px] text-center">
         <div class="mb-[50px]">
