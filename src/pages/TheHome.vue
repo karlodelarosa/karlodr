@@ -18,7 +18,7 @@ import { PROJECT_DATA } from '../data/project'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
-const about = '/about.png'
+const about = '/karlo.png'
 
 const scrollToTop = () => {
   window.scrollTo({
@@ -44,7 +44,7 @@ const scrollToTop = () => {
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
         <div class=" h-screen flex flex-col items-center justify-center">
           <h1 class="hero-text text-glow">JKDR</h1>
-          <p class="text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text" 
+          <p class="text-teal-500 font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text" 
             v-motion
             :initial="{ opacity: 0, y: -20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
@@ -66,7 +66,7 @@ const scrollToTop = () => {
         :delay="300"
       >
         <div class="md:col-span-4">
-          <img :src="about" alt="About us">
+          <img :src="about" alt="About us" class="grayscale hover:grayscale-0 transition-all duration-300">
         </div>
 
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
@@ -202,8 +202,9 @@ const scrollToTop = () => {
 
       <div class="py-[30px] text-center">
         <div class="mb-[50px]">
-          <h3 class="text-xl font-black tracking-[10px] ">CONTACT INFO</h3>
-          <a href="mailto:karlo.karlo59@gmail.com">karlo.karlo59@gmail.com</a>
+          <h3 class="text-xl font-black tracking-[10px] ">KARLO DELA ROSA</h3>
+          <a href="mailto:karlo.karlo59@gmail.com">karlo.karlo59@gmail.com</a> <br>
+          <a href="mailto:karlo.karlo59@gmail.com">+639511945392</a>
         </div>
 
         <div class="flex flex-row gap-[30px] items-center justify-center mb-[50px]">
