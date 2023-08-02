@@ -1,10 +1,10 @@
 export const EXPERTISE_DATA = [
   {
-    title: 'Frontend Developement',
+    title: 'Frontend Development',
     description: 'Create and build wireframes and prototypes based on stakeholders\' business requirements in a visual and technical manner.'
   },
   {
-    title: 'Software Developement',
+    title: 'Software Development',
     description: 'Plan and design the application infrastructure, develop features, conduct code reviews, and handle deployments.'
   },
   {
