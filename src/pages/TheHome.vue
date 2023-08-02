@@ -72,7 +72,8 @@ const scrollToTop = () => {
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
           <h2 class="section-title text-white font-extra-bold text-left mb-[40px]">ABOUT</h2>
           <p class="text-white mb-[30px] text-[18px] font-light">{{ ABOUT_DATA.main_description }}</p>
-          <p class="text-white mb-[50px] text-[18px] font-light">{{ ABOUT_DATA.sub_description }}</p>
+          <p class="text-white mb-[30px] text-[18px] font-light">{{ ABOUT_DATA.sub_description1 }}</p>
+          <p class="text-white mb-[50px] text-[18px] font-light">{{ ABOUT_DATA.sub_description2 }}</p>
 
           <div class="flex flex-row items-center justify-between md:justify-normal md:gap-[30px] px-[15px]">
             <GameController/>
