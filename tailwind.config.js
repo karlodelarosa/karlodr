@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+
+module.exports = {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -36,6 +38,7 @@ export default {
 
         // Dark Mode
         'custom-dark': '#282828',
+        'accent-1': '#04B6C1'
       },
     },
   },
