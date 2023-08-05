@@ -35,7 +35,7 @@ const toggleDark = useToggle(isDark);
 <template>
   <main class="w-full">
 
-    <div class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-transparent dark:bg-black/70">
+    <div class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-white/70 dark:bg-black/70">
       <div @click="scrollToTop()" class="flex flex-row items-center gap-2">
         <img :src="logo" class="w-[50px]" alt="Karlo Dela Rosa | Logo">
         <h1 class="text-black dark:text-white text-lg">karlodr.dev</h1>
@@ -169,16 +169,21 @@ const toggleDark = useToggle(isDark);
       >
         <h2 class="section-title text-black dark:text-white font-extra-bold text-left">PROJECTS</h2>
 
-        <div class="py-[30px]">
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-[15px]">
-            <div class="card-container rounded-lg overflow-hidden w-full md:col-span-4" v-for="project in PROJECT_DATA">
-              <div class="image-container overflow-hidden h-[150px]">
-                <img :src="project.thumbnail" alt="Karlo Dela Rosa | Project thumbnail" class="w-full brightness-50 hover:brightness-100 hover:scale-110 transition-all duration-500">
-              </div>
+        <div class="py-[30px] flex flex-col gap-[60px]">
+          <div v-for="project in PROJECT_DATA">
+            <h3 class="text-white font-bold mb-2">{{ project.name }}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-[15px]">
+              <div class="card-container rounded-lg overflow-hidden w-full md:col-span-4" v-for="item in project.items">
+                <a :href="item.url" target="_blank" class="cursor-pointer">
+                  <div class="image-container overflow-hidden h-[250px]">
+                    <img :src="item.thumbnail" alt="Karlo Dela Rosa | Project thumbnail" class="w-full brightness-50 hover:brightness-100 hover:scale-110 transition-all duration-500">
+                  </div>
 
-              <div class="content-container bg-black dark:bg-white py-3 px-2 text-center">
-                <h3 class="text-2xl font-bold text-white dark:text-black">{{ project.title }}</h3>
-                <p class="text-white dark:text-black">{{ project.description }}</p>
+                  <div class="content-container bg-black dark:bg-white py-3 px-2 text-center">
+                    <h3 class="text-2xl font-bold text-white dark:text-black">{{ item.title }}</h3>
+                    <p class="text-white dark:text-black">{{ item.description }}</p>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
