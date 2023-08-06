@@ -41,7 +41,7 @@ export const PROJECT_DATA = [
         title: 'Gallery Template',
         description: 'Good for showing pictures and experience',
         thumbnail: '/projects/gallery_thumbnail.png',
-        url: 'https://www.figma.com/file/Npn3G3yUcCgstJknHGByAL/Gallery-template?type=design&node-id=0%3A1&mode=design&t=OhPHz9mpg0oaaZSZ-1'
+        url: 'https://www.figma.com/proto/Npn3G3yUcCgstJknHGByAL/Gallery-template?type=design&node-id=2-2&t=7E57hKIvpbWFX9Kj-0&scaling=min-zoom&page-id=0%3A1'
       }
     ]
   }
