@@ -220,8 +220,8 @@ const toggleDark = useToggle(isDark);
       <div class="py-[30px] text-center">
         <div class="mb-[50px]">
           <h3 class="text-xl font-black tracking-[10px] ">KARLO DELA ROSA</h3>
-          <a href="mailto:karlo.karlo59@gmail.com">karlo.karlo59@gmail.com</a> <br>
-          <a href="mailto:karlo.karlo59@gmail.com">+639511945392</a>
+          <a href="mailto:karlordr@gmail.com">karlordr@gmail.com</a> <br>
+          <a href="tel:639511945392">+639511945392</a>
         </div>
 
         <div class="flex flex-row gap-[30px] items-center justify-center mb-[50px]">
