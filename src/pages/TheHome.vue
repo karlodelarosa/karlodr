@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import ArrowDown from '../components/svg/ArrowDown.vue'
 import ArrowDownBlack from '../components/svg/ArrowDownBlack.vue'
@@ -17,9 +17,6 @@ import { PROJECT_DATA } from '../data/project'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
-// const about = '/karlo.png'
-// const aboutSm = '/karlo_sm.png'
-
 
 const showSmallImage = ref(true);
 
@@ -48,6 +45,13 @@ const scrollToTop = () => {
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+const animate = ref(false)
+onMounted(() => {
+  nextTick(() => {
+    animate.value = true
+  })
+})
 </script>
 
 <template>
@@ -72,7 +76,12 @@ const toggleDark = useToggle(isDark);
     <div id="top" class="bg-white dark:bg-black min-h-screen">
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
         <div class=" h-screen flex flex-col items-center justify-center">
-          <h1 class="hero-text gradient-text text-black dark:text-white">JKDR</h1>
+          <h1
+            class="hero-text clearer toVertical toVerticalXsSm gradient-text text-black dark:text-white"
+            :class="{ 'active': animate }"
+          >
+            JKDR
+          </h1>
           <p class="text-accent-1 dark:text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow" 
             v-motion
             :initial="{ opacity: 0, y: -20 }"
@@ -118,14 +127,6 @@ const toggleDark = useToggle(isDark);
           <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">{{ ABOUT_DATA.main_description }}</p>
           <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">{{ ABOUT_DATA.sub_description1 }}</p>
           <p class="text-black dark:text-white mb-[50px] text-[18px] font-light">{{ ABOUT_DATA.sub_description2 }}</p>
-
-          <!-- <div class="flex flex-row items-center justify-between md:justify-normal md:gap-[30px] px-[15px]">
-            <GameController/>
-            <Amplifier/>
-            <Television/>
-          </div> -->
-
-          <!-- <BigArrowDown class="ml-auto"/> -->
         </div>
       </div>
       
@@ -272,16 +273,20 @@ const toggleDark = useToggle(isDark);
 
 <style scoped>
 .hero-text {
-  /* text-orientation: sideways-right;
-    writing-mode: horizontal-tb;
-    letter-spacing: 20px; */
-    
   letter-spacing: 10px;
   font-size: 100px;
   font-weight: 900;
   line-height: 1;
-  animation: clearer 1.5s ease-in, toVerticalXsSm 3s ease;
-  
+  animation: clearer 1.5s ease-in;
+}
+
+.toVerticalXsSm {
+  letter-spacing: -60px;
+  transition: letter-spacing 2s ease; 
+}
+
+.toVerticalXsSm.active {
+  letter-spacing: 10px;
 }
 
 .gradient-text {
@@ -299,7 +304,16 @@ const toggleDark = useToggle(isDark);
     font-size: 170px;
     font-weight: 900;
     line-height: 1;
-    animation: clearer 1.5s ease-in, toVertical 3s ease;
+    animation: clearer 1.5s ease-in;
+  }
+
+  .toVertical {
+    letter-spacing: -120px;
+    transition: letter-spacing 3s ease;
+  }
+
+  .toVertical.active {
+    letter-spacing: 20px;
   }
 }
 
