@@ -1,10 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import ArrowDown from '../components/svg/ArrowDown.vue'
 import ArrowDownBlack from '../components/svg/ArrowDownBlack.vue'
-// import Amplifier from '../components/svg/Amplifier.vue'
-// import GameController from '../components/svg/GameController.vue'
-// import Television from '../components/svg/Television.vue'
 import OpenLink from '../components/svg/OpenLink.vue'
 import LinkedIn from '../components/svg/LinkedIn.vue'
 import Facebook from '../components/svg/Facebook.vue'
@@ -19,7 +17,27 @@ import { PROJECT_DATA } from '../data/project'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
-const about = '/karlo.png'
+// const about = '/karlo.png'
+// const aboutSm = '/karlo_sm.png'
+
+
+const showSmallImage = ref(true);
+
+const smallImageSrc = '/karlo_sm.png'
+const largeImageSrc = '/karlo.png'
+
+const onSmallImageLoad = () => {
+  const largeImage = new Image();
+  largeImage.src = largeImageSrc;
+  
+  largeImage.onload = () => {
+    showSmallImage.value = false;
+  };
+};
+
+const onLargeImageLoad = () => {
+  console.log("Large image loaded");
+};
 
 const scrollToTop = () => {
   window.scrollTo({
@@ -54,8 +72,8 @@ const toggleDark = useToggle(isDark);
     <div id="top" class="bg-white dark:bg-black min-h-screen">
       <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
         <div class=" h-screen flex flex-col items-center justify-center">
-          <h1 class="hero-text text-glow text-black dark:text-white">JKDR</h1>
-          <p class="text-accent-1 font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow" 
+          <h1 class="hero-text gradient-text text-black dark:text-white">JKDR</h1>
+          <p class="text-accent-1 dark:text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow" 
             v-motion
             :initial="{ opacity: 0, y: -20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
@@ -77,7 +95,22 @@ const toggleDark = useToggle(isDark);
         :delay="300"
       >
         <div class="md:col-span-4">
-          <img :src="about" alt="Karlo Dela Rosa | About us" class="grayscale hover:grayscale-0 transition-all duration-300">
+          <img
+            v-if="showSmallImage"
+            :src="smallImageSrc"
+            loading="lazy"
+            alt="Karlo Dela Rosa | About us"
+            class="w-full grayscale hover:grayscale-0 transition-all duration-300"
+            @load="onSmallImageLoad()"
+          />
+          <img
+            v-else
+            :src="largeImageSrc"
+            loading="lazy"
+            alt="Karlo Dela Rosa | About us"
+            class="w-full grayscale hover:grayscale-0 transition-all duration-300"
+            @load="onLargeImageLoad()"
+          />
         </div>
 
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
@@ -242,11 +275,20 @@ const toggleDark = useToggle(isDark);
   /* text-orientation: sideways-right;
     writing-mode: horizontal-tb;
     letter-spacing: 20px; */
+    
   letter-spacing: 10px;
   font-size: 100px;
   font-weight: 900;
   line-height: 1;
   animation: clearer 1.5s ease-in, toVerticalXsSm 3s ease;
+  
+}
+
+.gradient-text {
+  background: #297CCF;
+  background: linear-gradient(to right, #297CCF 0%, #46CF98 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media screen and (min-width: 768px) {
