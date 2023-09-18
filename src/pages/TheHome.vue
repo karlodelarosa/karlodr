@@ -194,7 +194,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
+    <!-- <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
         v-motion
         :initial="{ opacity: 0, y: 100 }"
@@ -223,7 +223,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div class="lg:max-w-7xl lg:mx-auto"
