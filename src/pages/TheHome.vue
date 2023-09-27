@@ -13,7 +13,7 @@ import { ABOUT_DATA } from '../data/about'
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA} from '../data/experience'
 import { STACK_DATA } from '../data/stack'
-import { PROJECT_DATA } from '../data/project'
+// import { PROJECT_DATA } from '../data/project'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
