@@ -3,13 +3,13 @@ export const EXPERIENCE_DATA = [
     title: "Senior Fullstack Developer",
     description:
       "Design architecture, manage projects for maximum efficiency, create solutions to software problems, and assist businesses in utilizing all software resources.",
-    date: "2021-Present",
+    date: "Present",
   },
   {
     title: "Lead Developer | Fullstack Developer",
     description:
       "Lead the planning, create tasks and tickets, and oversee the development team on daily basis. Coding, set up projects, and create software architecture.",
-    date: "2021-Present",
+    date: "2021-2023",
   },
   // {
   //   title: "Project Lead | Fullstack Developer",
