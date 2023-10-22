@@ -1,16 +1,22 @@
 export const EXPERIENCE_DATA = [
   {
-    title: "Lead Developer | Fullstack Developer",
+    title: "Senior Fullstack Developer",
     description:
       "Design architecture, manage projects for maximum efficiency, create solutions to software problems, and assist businesses in utilizing all software resources.",
-    date: "2022-Present",
+    date: "2021-Present",
   },
   {
-    title: "Project Lead | Fullstack Developer",
+    title: "Lead Developer | Fullstack Developer",
     description:
       "Lead the planning, create tasks and tickets, and oversee the development team on daily basis. Coding, set up projects, and create software architecture.",
-    date: "2021-2022",
+    date: "2021-Present",
   },
+  // {
+  //   title: "Project Lead | Fullstack Developer",
+  //   description:
+  //     "Lead the planning, create tasks and tickets, and oversee the development team on daily basis. Coding, set up projects, and create software architecture.",
+  //   date: "2021-2022",
+  // },
   {
     title: "Frontend Developer",
     description:
