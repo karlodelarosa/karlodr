@@ -1,6 +1,6 @@
 export const EXPERIENCE_DATA = [
   {
-    title: "Senior Fullstack Developer",
+    title: "Lead Developer",
     description:
       "Design architecture, manage projects for maximum efficiency, create solutions to software problems, and assist businesses in utilizing all software resources.",
     date: "Present",
