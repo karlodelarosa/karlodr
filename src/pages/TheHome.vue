@@ -1,57 +1,57 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
-import { useDark, useToggle } from "@vueuse/core";
-import ArrowDown from "../components/svg/ArrowDown.vue";
-import ArrowDownBlack from "../components/svg/ArrowDownBlack.vue";
-import OpenLink from "../components/svg/OpenLink.vue";
-import LinkedIn from "../components/svg/LinkedIn.vue";
-import Facebook from "../components/svg/Facebook.vue";
-import Github from "../components/svg/Github.vue";
-import LinkedInWhite from "../components/svg/LinkedInWhite.vue";
+import { ref, onMounted, nextTick } from 'vue'
+import { useDark, useToggle } from '@vueuse/core'
+import ArrowDown from '../components/svg/ArrowDown.vue'
+import ArrowDownBlack from '../components/svg/ArrowDownBlack.vue'
+import OpenLink from '../components/svg/OpenLink.vue'
+import LinkedIn from '../components/svg/LinkedIn.vue'
+import Facebook from '../components/svg/Facebook.vue'
+import Github from '../components/svg/Github.vue'
+import LinkedInWhite from '../components/svg/LinkedInWhite.vue'
 
-import { ABOUT_DATA } from "../data/about";
-import { EXPERTISE_DATA } from "../data/expertise";
-import { EXPERIENCE_DATA } from "../data/experience";
-import { STACK_DATA } from "../data/stack";
+import { ABOUT_DATA } from '../data/about'
+import { EXPERTISE_DATA } from '../data/expertise'
+import { EXPERIENCE_DATA } from '../data/experience'
+import { STACK_DATA } from '../data/stack'
 // import { PROJECT_DATA } from '../data/project'
-import { CONTRIBUTION_DATA } from "../data/contribution";
+import { CONTRIBUTION_DATA } from '../data/contribution'
 
-const logo = "/logo.png";
+const logo = '/logo.png'
 
-const showSmallImage = ref(true);
+const showSmallImage = ref(true)
 
-const smallImageSrc = "/karlo_sm.png";
-const largeImageSrc = "/karlo.png";
+const smallImageSrc = '/karlo_sm.png'
+const largeImageSrc = '/karlo.png'
 
 const onSmallImageLoad = () => {
-  const largeImage = new Image();
-  largeImage.src = largeImageSrc;
+  const largeImage = new Image()
+  largeImage.src = largeImageSrc
 
   largeImage.onload = () => {
-    showSmallImage.value = false;
-  };
-};
+    showSmallImage.value = false
+  }
+}
 
 const onLargeImageLoad = () => {
-  console.log("Large image loaded");
-};
+  console.log('Large image loaded')
+}
 
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
-    behavior: "smooth",
-  });
-};
+    behavior: 'smooth',
+  })
+}
 
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 
-const animate = ref(false);
+const animate = ref(false)
 onMounted(() => {
   nextTick(() => {
-    animate.value = true;
-  });
-});
+    animate.value = true
+  })
+})
 </script>
 
 <template>
@@ -59,16 +59,14 @@ onMounted(() => {
     <div
       class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-white/70 dark:bg-black/70"
     >
-      <div @click="scrollToTop()" class="flex flex-row items-center gap-2">
+      <div class="flex flex-row items-center gap-2" @click="scrollToTop()">
         <img :src="logo" class="w-[50px]" alt="Karlo Dela Rosa | Logo" />
         <h1 class="text-black dark:text-white text-lg">karlodr.dev</h1>
       </div>
       <!-- <MenuIcon class="ml-auto"/> -->
 
       <div class="flex flex-row items-center gap-[10px]">
-        <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"
-          ><LinkedInWhite
-        /></a>
+        <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedInWhite /></a>
         <label class="switch">
           <input type="checkbox" :checked="isDark" @change="toggleDark()" />
           <span class="slider round"></span>
@@ -77,9 +75,7 @@ onMounted(() => {
     </div>
 
     <div id="top" class="bg-white dark:bg-black min-h-screen">
-      <div
-        class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative"
-      >
+      <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
         <div class="h-screen flex flex-col items-center justify-center">
           <h1
             class="hero-text clearer toVertical toVerticalXsSm gradient-text text-black dark:text-white"
@@ -88,8 +84,8 @@ onMounted(() => {
             JKDR
           </h1>
           <p
-            class="text-accent-1 dark:text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow"
             v-motion
+            class="text-accent-1 dark:text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow"
             :initial="{ opacity: 0, y: -20 }"
             :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
             :delay="1300"
@@ -98,22 +94,16 @@ onMounted(() => {
           </p>
         </div>
 
-        <a
-          href="#about"
-          class="absolute bottom-10 left-0 right-0 animate-pulse cursor-pointer"
-        >
+        <a href="#about" class="absolute bottom-10 left-0 right-0 animate-pulse cursor-pointer">
           <ArrowDown class="mx-auto" />
         </a>
       </div>
     </div>
 
-    <div
-      id="about"
-      class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px]"
-    >
+    <div id="about" class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px]">
       <div
-        class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
         v-motion
+        class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
         :delay="300"
@@ -138,49 +128,38 @@ onMounted(() => {
         </div>
 
         <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
-          <h2
-            class="section-title text-black dark:text-white font-extra-bold text-left mb-[40px]"
-          >
+          <h2 class="section-title text-black dark:text-white font-extra-bold text-left mb-[40px]">
             ABOUT
           </h2>
-          <p
-            class="text-black dark:text-white mb-[30px] text-[18px] font-light"
-          >
+          <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">
             {{ ABOUT_DATA.main_description }}
           </p>
-          <p
-            class="text-black dark:text-white mb-[30px] text-[18px] font-light"
-          >
+          <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">
             {{ ABOUT_DATA.sub_description1 }}
           </p>
-          <p
-            class="text-black dark:text-white mb-[50px] text-[18px] font-light"
-          >
+          <p class="text-black dark:text-white mb-[50px] text-[18px] font-light">
             {{ ABOUT_DATA.sub_description2 }}
           </p>
         </div>
       </div>
     </div>
 
-    <div
-      class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]"
-    >
+    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div
-        class="lg:max-w-7xl lg:mx-auto"
         v-motion
+        class="lg:max-w-7xl lg:mx-auto"
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
         :delay="300"
       >
-        <h2
-          class="section-title text-black dark:text-white font-extra-bold text-left"
-        >
+        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
           EXPERTISE
         </h2>
 
         <div class="py-[30px] flex flex-col gap-[30px]">
           <div
             v-for="expertise in EXPERTISE_DATA"
+            :key="expertise.title"
             class="border-4 rounded-lg border-black dark:border-white p-5 text-black dark:text-white"
           >
             <h3 class="text-2xl uppercase font-bold mb-3">
@@ -192,26 +171,25 @@ onMounted(() => {
       </div>
     </div>
 
-    <div
-      class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]"
-    >
+    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div
-        class="lg:max-w-7xl lg:mx-auto"
         v-motion
+        class="lg:max-w-7xl lg:mx-auto"
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
         :delay="300"
       >
-        <h2
-          class="section-title text-black dark:text-white font-extra-bold text-left"
-        >
+        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
           EXPERIENCE
         </h2>
 
         <div class="py-[30px] lg:w-7/12 lg:mx-auto">
           <div class="flex flex-row">
             <table>
-              <tr v-for="experience in EXPERIENCE_DATA">
+              <tr
+                v-for="experience in EXPERIENCE_DATA"
+                :key="`${experience.title}-${experience.date}`"
+              >
                 <td
                   class="border-r border-black dark:border-white text-black dark:text-white align-baseline pr-[25px] pt-[25px]"
                 >
@@ -230,28 +208,21 @@ onMounted(() => {
       </div>
     </div>
 
-    <div
-      class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]"
-    >
+    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div
-        class="lg:max-w-7xl lg:mx-auto"
         v-motion
+        class="lg:max-w-7xl lg:mx-auto"
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
         :delay="300"
       >
-        <h2
-          class="section-title text-black dark:text-white font-extra-bold text-left"
-        >
-          STACK
-        </h2>
+        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">STACK</h2>
 
         <div class="py-[30px] lg:w-7/12 lg:mx-auto">
-          <div
-            class="flex flex-row flex-wrap gap-[50px] justify-center items-center"
-          >
+          <div class="flex flex-row flex-wrap gap-[50px] justify-center items-center">
             <img
               v-for="stack in STACK_DATA"
+              :key="stack"
               :src="stack"
               alt="Stack"
               class="max-h-[60px] aspect-auto brightness-50 hover:brightness-100"
@@ -292,19 +263,15 @@ onMounted(() => {
       </div>
     </div> -->
 
-    <div
-      class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]"
-    >
+    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
       <div
-        class="lg:max-w-7xl lg:mx-auto"
         v-motion
+        class="lg:max-w-7xl lg:mx-auto"
         :initial="{ opacity: 0, y: 100 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
         :delay="300"
       >
-        <h2
-          class="section-title text-black dark:text-white font-extra-bold text-left"
-        >
+        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
           CONTRIBUTIONS
         </h2>
 
@@ -312,6 +279,7 @@ onMounted(() => {
           <div class="grid grid-cols-1 md:grid-cols-12 gap-[30px]">
             <div
               v-for="contribution in CONTRIBUTION_DATA"
+              :key="contribution.url"
               class="border-4 rounded-lg border-black dark:border-white p-5 text-black dark:text-white md:col-span-4"
             >
               <h3 class="text-2xl uppercase font-bold mb-3">
@@ -340,23 +308,15 @@ onMounted(() => {
           <a href="tel:639511945392">+639511945392</a>
         </div>
 
-        <div
-          class="flex flex-row gap-[30px] items-center justify-center mb-[50px]"
-        >
-          <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"
-            ><LinkedIn
-          /></a>
-          <a target="_blank" href="https://www.facebook.com/karlodrr/"
-            ><Facebook
-          /></a>
-          <a target="_blank" href="https://github.com/karlodelarosa"
-            ><Github
-          /></a>
+        <div class="flex flex-row gap-[30px] items-center justify-center mb-[50px]">
+          <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedIn /></a>
+          <a target="_blank" href="https://www.facebook.com/karlodrr/"><Facebook /></a>
+          <a target="_blank" href="https://github.com/karlodelarosa"><Github /></a>
         </div>
 
         <ArrowDownBlack
-          @click="scrollToTop()"
           class="rotate-180 mx-auto cursor-pointer active:scale-95"
+          @click="scrollToTop()"
         />
       </div>
     </div>

@@ -1,11 +1,5 @@
 <template>
-  <svg
-    width="63"
-    height="63"
-    viewBox="0 0 63 63"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_15_160)">
       <path
         fill-rule="evenodd"
@@ -16,12 +10,7 @@
     </g>
     <defs>
       <clipPath id="clip0_15_160">
-        <rect
-          width="62.2297"
-          height="62.2297"
-          fill="white"
-          transform="translate(0 0.0495605)"
-        />
+        <rect width="62.2297" height="62.2297" fill="white" transform="translate(0 0.0495605)" />
       </clipPath>
     </defs>
   </svg>

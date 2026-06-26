@@ -9,5 +9,5 @@ export const STACK_DATA = [
   '/brands/image_17.png',
   '/brands/image_18.png',
   '/brands/image_19.png',
-  '/brands/image_20.png'
+  '/brands/image_20.png',
 ]

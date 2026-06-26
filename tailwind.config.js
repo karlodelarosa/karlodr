@@ -2,10 +2,7 @@
 
 module.exports = {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     fontWeight: {
       hairline: '100',
@@ -24,7 +21,7 @@ module.exports = {
         'primary-2': '#5CDDD4',
         'primary-3': '#9EEDE3',
         'primary-4': '#000000',
-        'secondary': '#346DD8',
+        secondary: '#346DD8',
         'neutral-1': '#3D3D3D',
         'neutral-2': '#848B90',
         'neutral-3': '#BDC5CD',
@@ -38,10 +35,9 @@ module.exports = {
 
         // Dark Mode
         'custom-dark': '#282828',
-        'accent-1': '#04B6C1'
+        'accent-1': '#04B6C1',
       },
     },
   },
   plugins: [],
 }
-

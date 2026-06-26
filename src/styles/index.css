@@ -65,10 +65,23 @@ body {
   height: fit-content;
   color: black;
   background: white;
-  transition: color 0.5s, background-color 0.5s;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
   line-height: 1.6;
-  font-family: montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    montserrat,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -76,8 +89,19 @@ body {
 }
 
 .textured-font {
-  font-family: ants, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    ants,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 .switch {
@@ -87,7 +111,7 @@ body {
   height: 25px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -101,28 +125,28 @@ body {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 19px;
   width: 19px;
   left: 4px;
   bottom: 3px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #04B6C1;
+  background-color: #04b6c1;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #04B6C1;
+  box-shadow: 0 0 1px #04b6c1;
 }
 
 input:checked + .slider:before {
