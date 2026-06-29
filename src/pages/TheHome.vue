@@ -1,53 +1,31 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
-import ArrowDown from '../components/svg/ArrowDown.vue'
-import ArrowDownBlack from '../components/svg/ArrowDownBlack.vue'
 import OpenLink from '../components/svg/OpenLink.vue'
-import LinkedIn from '../components/svg/LinkedIn.vue'
-import Facebook from '../components/svg/Facebook.vue'
-import Github from '../components/svg/Github.vue'
 import LinkedInWhite from '../components/svg/LinkedInWhite.vue'
+import FacebookWhite from '../components/svg/FacebookWhite.vue'
+import Github from '../components/svg/Github.vue'
+import ProjectSection from '../components/ProjectSection.vue'
+import WritingSection from '../components/WritingSection.vue'
 
 import { ABOUT_DATA } from '../data/about'
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA } from '../data/experience'
 import { STACK_DATA } from '../data/stack'
-// import { PROJECT_DATA } from '../data/project'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
 
-const showSmallImage = ref(true)
-
-const smallImageSrc = '/karlo_sm.png'
-const largeImageSrc = '/karlo.png'
-
-const onSmallImageLoad = () => {
-  const largeImage = new Image()
-  largeImage.src = largeImageSrc
-
-  largeImage.onload = () => {
-    showSmallImage.value = false
-  }
-}
-
-const onLargeImageLoad = () => {
-  console.log('Large image loaded')
-}
-
 const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const scrollTo = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
 
 const animate = ref(false)
 onMounted(() => {
+  document.documentElement.classList.add('dark')
   nextTick(() => {
     animate.value = true
   })
@@ -55,363 +33,851 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="w-full">
-    <div
-      class="w-full flex flex-row justify-between items-center fixed top-0 py-3 z-50 px-[20px] bg-white/70 dark:bg-black/70"
-    >
-      <div class="flex flex-row items-center gap-2" @click="scrollToTop()">
-        <img :src="logo" class="w-[50px]" alt="Karlo Dela Rosa | Logo" />
-        <h1 class="text-black dark:text-white text-lg">karlodr.dev</h1>
+  <main class="classic-page">
+    <div class="classic-grain" aria-hidden="true" />
+
+    <header class="classic-nav">
+      <button class="classic-logo" @click="scrollToTop">
+        <img :src="logo" alt="Karlo Dela Rosa | Logo" class="classic-logo-img" />
+        <span class="classic-logo-text">karlodr.dev</span>
+      </button>
+
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.linkedin.com/in/karlo-dela-rosa/"
+        class="classic-social"
+        aria-label="LinkedIn"
+      >
+        <LinkedInWhite />
+      </a>
+    </header>
+
+    <!-- Hero -->
+    <section id="top" class="classic-hero">
+      <div class="classic-hero-inner">
+        <p
+          v-motion
+          class="classic-eyebrow"
+          :initial="{ opacity: 0, y: -24 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 700 } }"
+        >
+          Frontend Developer
+        </p>
+
+        <h1 class="classic-hero-title" :class="{ active: animate }">
+          <span class="classic-hero-letter">J</span>
+          <span class="classic-hero-letter accent">K</span>
+          <span class="classic-hero-letter">D</span>
+          <span class="classic-hero-letter accent-2">R</span>
+        </h1>
+
+        <p
+          v-motion
+          class="classic-hero-tagline"
+          :initial="{ opacity: 0, y: 24 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 800, delay: 500 } }"
+        >
+          Interfaces that feel fast, intentional,
+          <span class="classic-highlight">and a little delightful</span>
+        </p>
       </div>
-      <!-- <MenuIcon class="ml-auto"/> -->
 
-      <div class="flex flex-row items-center gap-[10px]">
-        <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedInWhite /></a>
-        <label class="switch">
-          <input type="checkbox" :checked="isDark" @change="toggleDark()" />
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
+      <button class="classic-scroll-hint" aria-label="Scroll to about" @click="scrollTo('about')">
+        <span>Scroll</span>
+        <span class="classic-scroll-arrow">↓</span>
+      </button>
+    </section>
 
-    <div id="top" class="bg-white dark:bg-black min-h-screen">
-      <div class="lg:max-w-7xl lg:mx-auto h-screen py-[10px] px-[20px] relative">
-        <div class="h-screen flex flex-col items-center justify-center">
-          <h1
-            class="hero-text clearer toVertical toVerticalXsSm gradient-text text-black dark:text-white"
-            :class="{ active: animate }"
-          >
-            JKDR
-          </h1>
-          <p
-            v-motion
-            class="text-accent-1 dark:text-white font-bold tracking-[8px] lg:tracking-[20px] pt-0 position-text text-glow"
-            :initial="{ opacity: 0, y: -20 }"
-            :enter="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-            :delay="1300"
-          >
-            FRONTEND DEVELOPER
-          </p>
-        </div>
-
-        <a href="#about" class="absolute bottom-10 left-0 right-0 animate-pulse cursor-pointer">
-          <ArrowDown class="mx-auto" />
-        </a>
-      </div>
-    </div>
-
-    <div id="about" class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px]">
+    <!-- About -->
+    <section id="about" class="classic-section">
       <div
         v-motion
-        class="lg:max-w-7xl lg:mx-auto grid grid-cols-1 md:grid-cols-12"
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
+        class="classic-container"
+        :initial="{ opacity: 0, y: 80 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
       >
-        <div class="md:col-span-4">
-          <img
-            v-if="showSmallImage"
-            :src="smallImageSrc"
-            loading="lazy"
-            alt="Karlo Dela Rosa | About us"
-            class="w-full grayscale hover:grayscale-0 transition-all duration-300"
-            @load="onSmallImageLoad()"
-          />
-          <img
-            v-else
-            :src="largeImageSrc"
-            loading="lazy"
-            alt="Karlo Dela Rosa | About us"
-            class="w-full grayscale hover:grayscale-0 transition-all duration-300"
-            @load="onLargeImageLoad()"
-          />
-        </div>
-
-        <div class="pt-[50px] px-[20px] mb-[80px] md:col-span-8 lg:pt-0">
-          <h2 class="section-title text-black dark:text-white font-extra-bold text-left mb-[40px]">
-            ABOUT
+        <header class="classic-section-head">
+          <span class="classic-section-index">01</span>
+          <h2 class="classic-section-title">
+            About<span class="classic-dot">.</span>
           </h2>
-          <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">
-            {{ ABOUT_DATA.main_description }}
-          </p>
-          <p class="text-black dark:text-white mb-[30px] text-[18px] font-light">
-            {{ ABOUT_DATA.sub_description1 }}
-          </p>
-          <p class="text-black dark:text-white mb-[50px] text-[18px] font-light">
-            {{ ABOUT_DATA.sub_description2 }}
-          </p>
+        </header>
+
+        <div class="classic-prose">
+          <p class="classic-lead">{{ ABOUT_DATA.main_description }}</p>
+          <p>{{ ABOUT_DATA.sub_description1 }}</p>
+          <p class="classic-accent-line">{{ ABOUT_DATA.sub_description2 }}</p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
+    <!-- Expertise -->
+    <section id="expertise" class="classic-section classic-section-alt">
       <div
         v-motion
-        class="lg:max-w-7xl lg:mx-auto"
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
+        class="classic-container"
+        :initial="{ opacity: 0, y: 80 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
       >
-        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
-          EXPERTISE
-        </h2>
+        <header class="classic-section-head">
+          <span class="classic-section-index">02</span>
+          <h2 class="classic-section-title">
+            Expertise<span class="classic-dot">.</span>
+          </h2>
+        </header>
 
-        <div class="py-[30px] flex flex-col gap-[30px]">
-          <div
-            v-for="expertise in EXPERTISE_DATA"
+        <ul class="classic-skill-list">
+          <li
+            v-for="(expertise, i) in EXPERTISE_DATA"
             :key="expertise.title"
-            class="border-4 rounded-lg border-black dark:border-white p-5 text-black dark:text-white"
+            class="classic-skill-item"
           >
-            <h3 class="text-2xl uppercase font-bold mb-3">
-              {{ expertise.title }}
-            </h3>
-            <p class="font-light text-lg">{{ expertise.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
-      <div
-        v-motion
-        class="lg:max-w-7xl lg:mx-auto"
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
-      >
-        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
-          EXPERIENCE
-        </h2>
-
-        <div class="py-[30px] lg:w-7/12 lg:mx-auto">
-          <div class="flex flex-row">
-            <table>
-              <tr
-                v-for="experience in EXPERIENCE_DATA"
-                :key="`${experience.title}-${experience.date}`"
-              >
-                <td
-                  class="border-r border-black dark:border-white text-black dark:text-white align-baseline pr-[25px] pt-[25px]"
-                >
-                  {{ experience.date }}
-                </td>
-                <td class="text-black dark:text-white pl-[25px] py-[25px]">
-                  <h3 class="text-2xl uppercase font-bold mb-3">
-                    {{ experience.title }}
-                  </h3>
-                  <p class="font-light text-lg">{{ experience.description }}</p>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
-      <div
-        v-motion
-        class="lg:max-w-7xl lg:mx-auto"
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
-      >
-        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">STACK</h2>
-
-        <div class="py-[30px] lg:w-7/12 lg:mx-auto">
-          <div class="flex flex-row flex-wrap gap-[50px] justify-center items-center">
-            <img
-              v-for="stack in STACK_DATA"
-              :key="stack"
-              :src="stack"
-              alt="Stack"
-              class="max-h-[60px] aspect-auto brightness-50 hover:brightness-100"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
-      <div class="lg:max-w-7xl lg:mx-auto"
-        v-motion
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
-      >
-        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">PROJECTS</h2>
-
-        <div class="py-[30px] flex flex-col gap-[60px]">
-          <div v-for="project in PROJECT_DATA">
-            <h3 class="text-white font-bold mb-2">{{ project.name }}</h3>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-[15px]">
-              <div class="card-container rounded-lg overflow-hidden w-full md:col-span-4" v-for="item in project.items">
-                <a :href="item.url" target="_blank" class="cursor-pointer">
-                  <div class="image-container overflow-hidden h-[250px]">
-                    <img :src="item.thumbnail" alt="Karlo Dela Rosa | Project thumbnail" class="w-full brightness-50 hover:brightness-100 hover:scale-110 transition-all duration-500">
-                  </div>
-
-                  <div class="content-container bg-black dark:bg-white py-3 px-2 text-center">
-                    <h3 class="text-2xl font-bold text-white dark:text-black">{{ item.title }}</h3>
-                    <p class="text-white dark:text-black">{{ item.description }}</p>
-                  </div>
-                </a>
-              </div>
+            <span class="classic-skill-num">{{ String(Number(i) + 1).padStart(2, '0') }}</span>
+            <div>
+              <h3 class="classic-skill-title">{{ expertise.title }}</h3>
+              <p class="classic-skill-desc">{{ expertise.description }}</p>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
-    </div> -->
+    </section>
 
-    <div class="min-h-screen bg-white dark:bg-black py-[50px] lg:py-[100px] px-[20px]">
+    <!-- Experience -->
+    <section id="experience" class="classic-section">
       <div
         v-motion
-        class="lg:max-w-7xl lg:mx-auto"
-        :initial="{ opacity: 0, y: 100 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 1000 } }"
-        :delay="300"
+        class="classic-container"
+        :initial="{ opacity: 0, y: 80 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
       >
-        <h2 class="section-title text-black dark:text-white font-extra-bold text-left">
-          CONTRIBUTIONS
-        </h2>
+        <header class="classic-section-head">
+          <span class="classic-section-index">03</span>
+          <h2 class="classic-section-title">
+            Experience<span class="classic-dot">.</span>
+          </h2>
+        </header>
 
-        <div class="py-[30px] w-full">
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-[30px]">
-            <div
-              v-for="contribution in CONTRIBUTION_DATA"
-              :key="contribution.url"
-              class="border-4 rounded-lg border-black dark:border-white p-5 text-black dark:text-white md:col-span-4"
+        <div class="classic-timeline">
+          <article
+            v-for="(experience, i) in EXPERIENCE_DATA"
+            :key="`${experience.title}-${experience.date}`"
+            class="classic-timeline-item"
+          >
+            <div class="classic-timeline-meta">
+              <time class="classic-date">{{ experience.date }}</time>
+              <div
+                class="classic-timeline-line"
+                :class="{ last: i === EXPERIENCE_DATA.length - 1 }"
+              />
+            </div>
+            <div class="classic-timeline-body">
+              <h3 class="classic-item-title">{{ experience.title }}</h3>
+              <p v-if="experience.company" class="classic-company">{{ experience.company }}</p>
+              <p class="classic-item-desc">{{ experience.description }}</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section id="stack" class="classic-section classic-section-alt">
+      <div
+        v-motion
+        class="classic-container"
+        :initial="{ opacity: 0, y: 80 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
+      >
+        <header class="classic-section-head">
+          <span class="classic-section-index">04</span>
+          <h2 class="classic-section-title">
+            Stack<span class="classic-dot">.</span>
+          </h2>
+        </header>
+
+        <div class="classic-stack-grid">
+          <img
+            v-for="stack in STACK_DATA"
+            :key="stack"
+            :src="stack"
+            alt="Stack"
+            class="classic-stack-logo"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="classic-section">
+      <ProjectSection variant="classic" />
+    </section>
+
+    <!-- Contributions -->
+    <section class="classic-section classic-section-alt">
+      <div
+        v-motion
+        class="classic-container"
+        :initial="{ opacity: 0, y: 80 }"
+        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
+      >
+        <header class="classic-section-head">
+          <span class="classic-section-index">06</span>
+          <h2 class="classic-section-title">
+            Contributions<span class="classic-dot">.</span>
+          </h2>
+        </header>
+
+        <div class="classic-contrib-grid">
+          <article
+            v-for="contribution in CONTRIBUTION_DATA"
+            :key="contribution.url"
+            class="classic-contrib-card"
+          >
+            <h3 class="classic-item-title">{{ contribution.title }}</h3>
+            <p v-if="contribution.description" class="classic-item-desc">
+              {{ contribution.description }}
+            </p>
+            <a
+              :href="contribution.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="classic-link"
             >
-              <h3 class="text-2xl uppercase font-bold mb-3">
-                {{ contribution.title }}
-              </h3>
-              <a
-                :href="contribution.url"
-                class="font-light hover:underline flex flex-row gap-1 items-center"
-              >
-                <OpenLink class="w-3" />
-                Open link
-              </a>
-            </div>
-          </div>
+              <OpenLink class="classic-link-icon" />
+              Open link
+            </a>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="py-[50px] px-[20px] bg-white">
-      <img :src="logo" class="mx-auto mb-[30px]" alt="Karlo Dela Rosa | Logo" />
+    <!-- Writing -->
+    <section id="writing" class="classic-section">
+      <WritingSection variant="classic" />
+    </section>
 
-      <div class="py-[30px] text-center">
-        <div class="mb-[50px]">
-          <h3 class="text-xl font-black tracking-[10px]">KARLO DELA ROSA</h3>
-          <a href="mailto:karlordr@gmail.com">karlordr@gmail.com</a> <br />
-          <a href="tel:639511945392">+639511945392</a>
+    <!-- Contact -->
+    <footer id="contact" class="classic-footer">
+      <div class="classic-container classic-footer-inner">
+        <img :src="logo" class="classic-footer-logo" alt="Karlo Dela Rosa | Logo" />
+
+        <h2 class="classic-footer-name">Karlo Dela Rosa</h2>
+        <p class="classic-footer-role">Frontend Developer</p>
+
+        <div class="classic-footer-contact">
+          <a href="mailto:karlordr@gmail.com">karlordr@gmail.com</a>
+          <a href="tel:639511945392">+63 951 194 5392</a>
         </div>
 
-        <div class="flex flex-row gap-[30px] items-center justify-center mb-[50px]">
-          <a target="_blank" href="https://www.linkedin.com/in/karlo-dela-rosa/"><LinkedIn /></a>
-          <a target="_blank" href="https://www.facebook.com/karlodrr/"><Facebook /></a>
-          <a target="_blank" href="https://github.com/karlodelarosa"><Github /></a>
+        <div class="classic-footer-social">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.linkedin.com/in/karlo-dela-rosa/"
+            aria-label="LinkedIn"
+          >
+            <LinkedInWhite />
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.facebook.com/karlodrr/"
+            aria-label="Facebook"
+          >
+            <FacebookWhite />
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/karlodelarosa"
+            aria-label="GitHub"
+            class="classic-github-link"
+          >
+            <Github />
+          </a>
         </div>
 
-        <ArrowDownBlack
-          class="rotate-180 mx-auto cursor-pointer active:scale-95"
-          @click="scrollToTop()"
-        />
+        <button class="classic-back-top" @click="scrollToTop">Back to top ↑</button>
       </div>
-    </div>
+    </footer>
   </main>
 </template>
 
 <style scoped>
-.hero-text {
-  letter-spacing: 10px;
-  font-size: 100px;
+.classic-page {
+  --classic-bg: #050505;
+  --classic-bg-alt: #0c0f12;
+  --classic-text: #f4f4f8;
+  --classic-muted: rgba(244, 244, 248, 0.62);
+  --classic-accent: #04b6c1;
+  --classic-accent-2: #297ccf;
+  --classic-accent-3: #46cf98;
+  --classic-border: rgba(244, 244, 248, 0.14);
+  --classic-gradient: linear-gradient(120deg, var(--classic-accent-2) 0%, var(--classic-accent-3) 100%);
+
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--classic-bg);
+  color: var(--classic-text);
+  font-family: montserrat, sans-serif;
+}
+
+.classic-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image: radial-gradient(var(--classic-accent) 0.6px, transparent 0.6px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+/* Nav */
+.classic-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 32px);
+  background: color-mix(in srgb, var(--classic-bg) 82%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--classic-border);
+}
+
+.classic-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+
+.classic-logo-img {
+  width: 42px;
+}
+
+.classic-logo-text {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.classic-social {
+  display: flex;
+  align-items: center;
+}
+
+.classic-github-link {
+  filter: invert(1);
+}
+
+/* Hero */
+.classic-hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px clamp(20px, 5vw, 48px) 100px;
+  text-align: center;
+}
+
+.classic-hero-inner {
+  max-width: 1100px;
+  width: 100%;
+}
+
+.classic-eyebrow {
+  display: inline-block;
+  margin-bottom: clamp(20px, 4vw, 36px);
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  font-weight: 800;
+  letter-spacing: clamp(6px, 2vw, 14px);
+  text-transform: uppercase;
+  color: var(--classic-accent);
+}
+
+.classic-hero-title {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0px, 1vw, 8px);
+  margin-bottom: clamp(24px, 5vw, 48px);
+  line-height: 0.85;
+}
+
+.classic-hero-letter {
+  display: inline-block;
+  font-size: clamp(72px, 22vw, 240px);
   font-weight: 900;
-  line-height: 1;
-  animation: clearer 1.5s ease-in;
-}
-
-.toVerticalXsSm {
-  letter-spacing: -60px;
-  transition: letter-spacing 2s ease;
-}
-
-.toVerticalXsSm.active {
-  letter-spacing: 10px;
-}
-
-.gradient-text {
-  background: #297ccf;
-  background: linear-gradient(to right, #297ccf 0%, #46cf98 100%);
+  letter-spacing: -0.04em;
+  background: var(--classic-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateY(48px);
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.8s ease,
+    filter 0.8s ease;
 }
 
-@media screen and (min-width: 768px) {
-  .hero-text {
-    text-orientation: sideways-right;
-    writing-mode: horizontal-tb;
-    letter-spacing: 20px;
-    font-size: 170px;
-    font-weight: 900;
-    line-height: 1;
-    animation: clearer 1.5s ease-in;
-  }
+.classic-hero-letter.accent {
+  background: linear-gradient(120deg, var(--classic-accent) 0%, var(--classic-accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
-  .toVertical {
-    letter-spacing: -120px;
-    transition: letter-spacing 3s ease;
-  }
+.classic-hero-letter.accent-2 {
+  background: linear-gradient(120deg, var(--classic-accent-3) 0%, var(--classic-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
-  .toVertical.active {
-    letter-spacing: 20px;
+.classic-hero-title.active .classic-hero-letter:nth-child(1) {
+  transition-delay: 0.05s;
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+.classic-hero-title.active .classic-hero-letter:nth-child(2) {
+  transition-delay: 0.15s;
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+.classic-hero-title.active .classic-hero-letter:nth-child(3) {
+  transition-delay: 0.25s;
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+.classic-hero-title.active .classic-hero-letter:nth-child(4) {
+  transition-delay: 0.35s;
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.classic-hero-tagline {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--classic-muted);
+}
+
+.classic-highlight {
+  display: inline;
+  font-weight: 800;
+  color: var(--classic-text);
+  background: linear-gradient(to top, color-mix(in srgb, var(--classic-accent) 28%, transparent) 40%, transparent 40%);
+}
+
+.classic-scroll-hint {
+  position: absolute;
+  bottom: clamp(24px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--classic-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: classic-bounce 2.4s ease-in-out infinite;
+}
+
+.classic-scroll-arrow {
+  font-size: 1.25rem;
+  color: var(--classic-accent);
+}
+
+@keyframes classic-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
   }
 }
 
-.position-text {
-  text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 20px;
+/* Sections */
+.classic-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(80px, 14vw, 140px) clamp(20px, 5vw, 48px);
 }
 
-.text-glow {
-  text-shadow: rgba(255, 255, 255, 0.4) 0px 0px 40px;
+.classic-section-alt {
+  background: var(--classic-bg-alt);
 }
 
-@keyframes clearer {
-  from {
-    filter: blur(10px);
-  }
-
-  to {
-    filter: blur(0);
-  }
+.classic-container {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-@keyframes toVerticalXsSm {
-  from {
-    letter-spacing: -60px;
-  }
-
-  to {
-    letter-spacing: 10px;
-  }
+.classic-section-head {
+  margin-bottom: clamp(40px, 8vw, 72px);
 }
 
-@keyframes toVertical {
-  from {
-    letter-spacing: -120px;
-  }
-
-  to {
-    letter-spacing: 20px;
-  }
+.classic-section-index {
+  display: block;
+  margin-bottom: 12px;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--classic-accent);
 }
 
-.section-title {
-  font-size: 70px;
-  letter-spacing: 13px;
-  word-break: break-all;
+.classic-section-title {
+  font-size: clamp(56px, 14vw, 148px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.classic-dot {
+  color: var(--classic-accent);
+}
+
+.classic-prose {
+  max-width: 720px;
+}
+
+.classic-prose p {
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--classic-muted);
+  margin-bottom: 24px;
+}
+
+.classic-lead {
+  font-size: clamp(1.15rem, 3vw, 1.45rem) !important;
+  font-weight: 600 !important;
+  color: var(--classic-text) !important;
+}
+
+.classic-accent-line {
+  display: inline-block;
+  padding: 16px 0 0;
+  font-weight: 700 !important;
+  color: var(--classic-text) !important;
+  border-top: 2px solid var(--classic-accent);
+}
+
+/* Skills */
+.classic-skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.classic-skill-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(20px, 4vw, 40px);
+  padding: clamp(28px, 5vw, 48px) 0;
+  border-bottom: 1px solid var(--classic-border);
+  align-items: start;
+}
+
+.classic-skill-item:first-child {
+  border-top: 1px solid var(--classic-border);
+}
+
+.classic-skill-num {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 900;
   line-height: 1;
-  margin-bottom: 30px;
+  color: color-mix(in srgb, var(--classic-accent) 35%, transparent);
+  letter-spacing: -0.04em;
+}
+
+.classic-skill-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.classic-skill-desc {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.65;
+  color: var(--classic-muted);
+  max-width: 560px;
+}
+
+/* Timeline */
+.classic-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.classic-timeline-item {
+  display: grid;
+  grid-template-columns: minmax(100px, 140px) 1fr;
+  gap: clamp(20px, 4vw, 40px);
+  padding: clamp(28px, 5vw, 40px) 0;
+}
+
+.classic-timeline-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.classic-date {
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--classic-accent);
+  white-space: nowrap;
+}
+
+.classic-timeline-line {
+  width: 2px;
+  flex: 1;
+  min-height: 40px;
+  background: var(--classic-border);
+}
+
+.classic-timeline-line.last {
+  display: none;
+}
+
+.classic-item-title {
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.classic-company {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 700;
+  color: var(--classic-accent);
+  margin-bottom: 12px;
+}
+
+.classic-item-desc {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.65;
+  color: var(--classic-muted);
+  max-width: 600px;
+}
+
+/* Stack */
+.classic-stack-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(32px, 6vw, 56px);
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.classic-stack-logo {
+  max-height: clamp(48px, 8vw, 72px);
+  width: auto;
+  opacity: 0.45;
+  filter: grayscale(1);
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    transform 0.3s ease;
+}
+
+.classic-stack-logo:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: scale(1.08);
+}
+
+/* Contributions */
+.classic-contrib-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.classic-contrib-card {
+  padding: clamp(24px, 4vw, 32px);
+  border: 1px solid var(--classic-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--classic-bg) 60%, transparent);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.classic-contrib-card:hover {
+  border-color: var(--classic-accent);
+  transform: translateY(-2px);
+}
+
+.classic-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--classic-accent);
+  text-decoration: none;
+}
+
+.classic-link:hover {
+  text-decoration: underline;
+}
+
+.classic-link-icon {
+  width: 12px;
+}
+
+/* Footer */
+.classic-footer {
+  position: relative;
+  z-index: 1;
+  padding: clamp(80px, 12vw, 120px) clamp(20px, 5vw, 48px);
+  border-top: 1px solid var(--classic-border);
+  text-align: center;
+}
+
+.classic-footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.classic-footer-logo {
+  width: 64px;
+  margin-bottom: 8px;
+}
+
+.classic-footer-name {
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.classic-footer-role {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--classic-accent);
+}
+
+.classic-footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 16px 0;
+}
+
+.classic-footer-contact a {
+  color: var(--classic-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.classic-footer-contact a:hover {
+  color: var(--classic-accent);
+}
+
+.classic-footer-social {
+  display: flex;
+  gap: 28px;
+  margin: 16px 0 32px;
+}
+
+.classic-back-top {
+  background: none;
+  border: 1px solid var(--classic-border);
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--classic-text);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.classic-back-top:hover {
+  border-color: var(--classic-accent);
+  color: var(--classic-accent);
+}
+
+@media (min-width: 768px) {
+  .classic-contrib-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .classic-timeline-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .classic-timeline-meta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .classic-timeline-line {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .classic-scroll-hint {
+    animation: none;
+  }
+
+  .classic-hero-letter {
+    transform: none;
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
 }
 </style>

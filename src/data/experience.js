@@ -1,32 +1,30 @@
 export const EXPERIENCE_DATA = [
   {
     title: 'Lead Developer',
+    company: 'Product & ministry tech',
     description:
-      'Design architecture, manage projects for maximum efficiency, create solutions to software problems, and assist businesses in utilizing all software resources.',
+      'Leading frontend architecture for worship and church-management platforms (Lyric Lens, Ministry Lens). Shipped production Workers apps, designed org-based auth flows, and owned the full UI stack from prototype to deploy.',
     date: 'Present',
   },
   {
     title: 'Lead Developer | Fullstack Developer',
+    company: 'B2B software',
     description:
-      'Lead the planning, create tasks and tickets, and oversee the development team on daily basis. Coding, set up projects, and create software architecture.',
-    date: '2021-2023',
+      'Led planning and delivery for a cross-functional dev team — task breakdown, code review, and software architecture. Reduced release friction by standardizing project setup and deployment pipelines.',
+    date: '2021–2023',
   },
-  // {
-  //   title: "Project Lead | Fullstack Developer",
-  //   description:
-  //     "Lead the planning, create tasks and tickets, and oversee the development team on daily basis. Coding, set up projects, and create software architecture.",
-  //   date: "2021-2022",
-  // },
   {
     title: 'Frontend Developer',
+    company: 'Agency / CMS builds',
     description:
-      'Build a website from scratch, created working reusable components and templates in Hubspot and Wordpress.',
-    date: '2020-2021',
+      'Built marketing sites from scratch and created reusable component libraries in HubSpot and WordPress. Improved handoff speed with documented design tokens and shared templates.',
+    date: '2020–2021',
   },
   {
     title: 'Senior Web Developer',
+    company: 'Real-time communications',
     description:
-      'Responsible for complex and high-impact projects. Also the main developer for the WebRTC application, handles frontend and backend, and onboard junior developers.',
-    date: '2017-2020',
+      'Main developer for a WebRTC application — full-stack ownership on high-impact features. Onboarded junior developers and mentored on frontend patterns and debugging.',
+    date: '2017–2020',
   },
 ]

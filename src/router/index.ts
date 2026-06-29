@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import TheHome from '../pages/TheHome.vue'
+import HomeShell from '../pages/HomeShell.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +8,25 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TheHome,
+      component: HomeShell,
       meta: {
         title: 'Karlo Dela Rosa',
       },
     },
+    {
+      path: '/classic',
+      redirect: { path: '/', query: { theme: 'classic' } },
+    },
+    {
+      path: '/new',
+      redirect: { path: '/', query: { theme: 'brutalist' } },
+    },
   ],
+})
+
+router.beforeEach((to) => {
+  const title = typeof to.meta.title === 'string' ? to.meta.title : 'Karlo Dela Rosa'
+  document.title = title
 })
 
 export default router

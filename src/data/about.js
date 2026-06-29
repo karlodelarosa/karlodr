@@ -1,7 +1,7 @@
 export const ABOUT_DATA = {
   main_description:
-    'Hi! I am Karlo, a dedicated problem solver, always eager to tackle challenging tasks and find creative solutions. As an explorer at heart, I continuously seek out new technologies, programming languages, and development trends.',
+    'Hi! I am Karlo — I build product UIs that feel fast, intentional, and a little bit delightful. From ministry platforms on Cloudflare Workers to church websites and SaaS dashboards, I care about clean architecture as much as pixel-perfect interfaces.',
   sub_description1:
-    "As a frontend developer, my passion lies in the art of creating captivating and user-centric designs and crafting visually appealing interfaces that will catch the user's eye.",
-  sub_description2: 'I love games, coffee, anime, and dogs!',
+    "As a frontend developer and lead, I bridge design and engineering: wireframes to production, reusable component systems, and teams that ship. Lately that's meant worship tech (Lyric Lens, Ministry Lens) and community sites like ELGC Church.",
+  sub_description2: 'Off-screen: games, coffee, anime, and dogs.',
 }
