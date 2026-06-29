@@ -18,7 +18,7 @@ function readStoredTheme(): SiteTheme {
   if (stored === 'bento' || stored === 'classic' || stored === 'brutalist' || stored === 'immersive') {
     return stored
   }
-  return 'bento'
+  return 'brutalist'
 }
 
 const theme = ref<SiteTheme>(readStoredTheme())
