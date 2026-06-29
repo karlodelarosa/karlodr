@@ -10,7 +10,6 @@ import WritingSection from '../components/WritingSection.vue'
 import { ABOUT_DATA } from '../data/about'
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA } from '../data/experience'
-import { STACK_DATA } from '../data/stack'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
@@ -181,33 +180,6 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Stack -->
-    <section id="stack" class="classic-section classic-section-alt">
-      <div
-        v-motion
-        class="classic-container"
-        :initial="{ opacity: 0, y: 80 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
-      >
-        <header class="classic-section-head">
-          <span class="classic-section-index">04</span>
-          <h2 class="classic-section-title">
-            Stack<span class="classic-dot">.</span>
-          </h2>
-        </header>
-
-        <div class="classic-stack-grid">
-          <img
-            v-for="stack in STACK_DATA"
-            :key="stack"
-            :src="stack"
-            alt="Stack"
-            class="classic-stack-logo"
-          />
-        </div>
-      </div>
-    </section>
-
     <!-- Projects -->
     <section id="projects" class="classic-section">
       <ProjectSection variant="classic" />
@@ -222,7 +194,7 @@ onMounted(() => {
         :visible="{ opacity: 1, y: 0, transition: { duration: 900 } }"
       >
         <header class="classic-section-head">
-          <span class="classic-section-index">06</span>
+          <span class="classic-section-index">05</span>
           <h2 class="classic-section-title">
             Contributions<span class="classic-dot">.</span>
           </h2>
@@ -698,33 +670,6 @@ onMounted(() => {
   line-height: 1.65;
   color: var(--classic-muted);
   max-width: 600px;
-}
-
-/* Stack */
-.classic-stack-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(32px, 6vw, 56px);
-  justify-content: center;
-  align-items: center;
-  padding: 24px 0;
-}
-
-.classic-stack-logo {
-  max-height: clamp(48px, 8vw, 72px);
-  width: auto;
-  opacity: 0.45;
-  filter: grayscale(1);
-  transition:
-    opacity 0.3s ease,
-    filter 0.3s ease,
-    transform 0.3s ease;
-}
-
-.classic-stack-logo:hover {
-  opacity: 1;
-  filter: grayscale(0);
-  transform: scale(1.08);
 }
 
 /* Contributions */

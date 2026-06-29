@@ -21,6 +21,10 @@ const router = createRouter({
       path: '/new',
       redirect: { path: '/', query: { theme: 'brutalist' } },
     },
+    {
+      path: '/immersive',
+      redirect: { path: '/', query: { theme: 'immersive' } },
+    },
   ],
 })
 

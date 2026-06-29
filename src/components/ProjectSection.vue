@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import OpenLink from './svg/OpenLink.vue'
 import { PROJECT_DATA } from '../data/project'
 
-defineProps<{
-  variant: 'bento' | 'classic' | 'brutalist'
+const props = defineProps<{
+  variant: 'bento' | 'classic' | 'brutalist' | 'immersive'
 }>()
 
 type ProjectItem = {
@@ -27,20 +27,62 @@ const allProjects = computed<ProjectItem[]>(() =>
 )
 
 const featuredProjects = computed(() => allProjects.value.filter((p) => p.featured))
-const moreProjects = computed(() => allProjects.value.filter((p) => !p.featured))
 
 function onCardMove(e: MouseEvent, el: HTMLElement) {
   const rect = el.getBoundingClientRect()
   const x = (e.clientX - rect.left) / rect.width - 0.5
   const y = (e.clientY - rect.top) / rect.height - 0.5
-  el.style.setProperty('--tilt-x', `${y * -6}deg`)
-  el.style.setProperty('--tilt-y', `${x * 6}deg`)
+  const tilt = props.variant === 'immersive' ? 14 : 6
+  el.style.setProperty('--tilt-x', `${y * -tilt}deg`)
+  el.style.setProperty('--tilt-y', `${x * tilt}deg`)
+  if (props.variant === 'immersive') {
+    const lift = 28 + (Math.abs(x) + Math.abs(y)) * 36
+    el.style.setProperty('--lift-z', `${lift}px`)
+  }
 }
 
 function onCardLeave(el: HTMLElement) {
   el.style.setProperty('--tilt-x', '0deg')
   el.style.setProperty('--tilt-y', '0deg')
+  if (props.variant === 'immersive') {
+    el.style.setProperty('--lift-z', '0px')
+  }
 }
+
+let floatRaf = 0
+
+function updateImmersiveCardDepth() {
+  const cards = document.querySelectorAll<HTMLElement>('.showcase--immersive .showcase-card')
+  cards.forEach((el, i) => {
+    const rect = el.getBoundingClientRect()
+    const center = rect.top + rect.height / 2
+    const viewCenter = window.innerHeight / 2
+    const dist = (center - viewCenter) / window.innerHeight
+    const float = dist * -36
+    const depth = Math.max(0, (1 - Math.abs(dist) * 1.4) * 50 + (i % 3) * 18)
+    el.style.setProperty('--scroll-float', `${float}px`)
+    el.style.setProperty('--depth-z', `${depth}px`)
+  })
+}
+
+function onImmersiveScroll() {
+  cancelAnimationFrame(floatRaf)
+  floatRaf = requestAnimationFrame(updateImmersiveCardDepth)
+}
+
+onMounted(() => {
+  if (props.variant !== 'immersive') return
+  updateImmersiveCardDepth()
+  window.addEventListener('scroll', onImmersiveScroll, { passive: true })
+  window.addEventListener('resize', onImmersiveScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  if (props.variant !== 'immersive') return
+  window.removeEventListener('scroll', onImmersiveScroll)
+  window.removeEventListener('resize', onImmersiveScroll)
+  cancelAnimationFrame(floatRaf)
+})
 
 const accentPalette = ['#297ccf', '#46cf98', '#04b6c1', '#6c5ce7', '#ff9f43']
 
@@ -52,7 +94,7 @@ function projectAccent(index: number) {
 <template>
   <section
     :id="variant === 'classic' ? undefined : 'projects'"
-    :class="['showcase', `showcase--${variant}`]"
+    :class="['showcase', `showcase--${variant}`, { 'immersive-snap-chapter': variant === 'immersive' }]"
   >
     <div class="showcase-inner">
       <!-- header -->
@@ -83,7 +125,7 @@ function projectAccent(index: number) {
           v-motion
           class="showcase-card showcase-card--featured"
           :class="`showcase-card--slot-${i}`"
-          :style="{ '--accent': projectAccent(i) }"
+          :style="{ '--accent': projectAccent(i), '--slot-index': i }"
           :initial="{ opacity: 0, y: 60 }"
           :visible="{ opacity: 1, y: 0, transition: { duration: 800, delay: i * 120 } }"
           @mousemove="onCardMove($event, $event.currentTarget as HTMLElement)"
@@ -109,41 +151,6 @@ function projectAccent(index: number) {
           </div>
           <span class="showcase-card-ring" aria-hidden="true" />
         </a>
-      </div>
-
-      <!-- more builds strip -->
-      <div v-if="moreProjects.length" class="showcase-more">
-        <div class="showcase-more-head">
-          <h3 class="showcase-more-title">More builds</h3>
-          <span class="showcase-more-hint">Scroll →</span>
-        </div>
-
-        <div class="showcase-strip" tabindex="0">
-          <a
-            v-for="(item, i) in moreProjects"
-            :key="item.url"
-            :href="item.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-motion
-            class="showcase-card showcase-card--strip"
-            :style="{ '--accent': projectAccent(i + featuredProjects.length) }"
-            :initial="{ opacity: 0, x: 40 }"
-            :visible="{ opacity: 1, x: 0, transition: { duration: 600, delay: i * 70 } }"
-          >
-            <div class="showcase-card-media">
-              <img :src="item.thumbnail" :alt="`${item.title} preview`" loading="lazy" />
-            </div>
-            <div class="showcase-card-veil showcase-card-veil--strip" aria-hidden="true" />
-            <div class="showcase-card-content showcase-card-content--strip">
-              <span class="showcase-card-group">{{ item.group }}</span>
-              <h3 class="showcase-card-title">{{ item.title }}</h3>
-              <span class="showcase-visit showcase-visit--compact">
-                <OpenLink class="showcase-visit-icon" />
-              </span>
-            </div>
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -400,61 +407,6 @@ function projectAccent(index: number) {
     0 24px 64px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
-/* horizontal strip */
-.showcase-more-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.showcase-more-title {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.showcase-more-hint {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  opacity: 0.45;
-}
-
-.showcase-strip {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 8px 4px 24px;
-  margin: 0 -4px;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 4px;
-  -webkit-overflow-scrolling: touch;
-  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
-}
-
-.showcase-strip::-webkit-scrollbar {
-  height: 4px;
-}
-
-.showcase-strip::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.showcase-card--strip {
-  flex: 0 0 clamp(260px, 72vw, 320px);
-  min-height: 340px;
-  scroll-snap-align: start;
-}
-
-.showcase-card-content--strip .showcase-card-title {
-  font-size: 1.15rem;
-}
-
 /* mosaic layout desktop */
 @media (min-width: 768px) {
   .showcase-mosaic {
@@ -503,14 +455,6 @@ function projectAccent(index: number) {
   background: #0a0a10;
 }
 
-.showcase--bento .showcase-more-title {
-  color: rgba(244, 244, 248, 0.9);
-}
-
-.showcase--bento .showcase-more-hint {
-  color: rgba(244, 244, 248, 0.5);
-}
-
 .showcase--bento .showcase-card-content {
   color: #f4f4f8;
 }
@@ -537,7 +481,6 @@ function projectAccent(index: number) {
   border-radius: 16px;
 }
 
-.showcase--classic .showcase-more-title,
 .showcase--classic .showcase-card-content {
   color: #f4f4f8;
 }
@@ -597,16 +540,6 @@ function projectAccent(index: number) {
   backdrop-filter: none;
 }
 
-.showcase--brutalist .showcase-more-title {
-  color: #000;
-  border-bottom: 3px solid #000;
-  padding-bottom: 8px;
-}
-
-.showcase--brutalist .showcase-strip::-webkit-scrollbar-thumb {
-  background: #000;
-}
-
 .showcase--brutalist .showcase-card-content {
   color: #fff;
 }
@@ -615,10 +548,131 @@ function projectAccent(index: number) {
   color: #ffe566;
 }
 
+/* ─── immersive theme ─── */
+.showcase--immersive {
+  position: relative;
+  z-index: 2;
+  padding-left: 72px;
+  padding-right: 28px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.showcase--immersive .showcase-mosaic {
+  perspective: 1500px;
+  perspective-origin: 50% 42%;
+}
+
+.showcase--immersive .showcase-card {
+  transform-style: preserve-3d;
+  transform: perspective(1200px)
+    translateZ(calc(var(--depth-z, 0px) + var(--lift-z, 0px)))
+    translateY(var(--scroll-float, 0px))
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+  background: rgba(8, 10, 22, 0.55);
+  border: 1px solid rgba(110, 200, 255, 0.14);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(110, 200, 255, 0.05) inset;
+}
+
+.showcase--immersive .showcase-card--slot-0 {
+  --base-depth: 52px;
+}
+
+.showcase--immersive .showcase-card--slot-1 {
+  --base-depth: 24px;
+}
+
+.showcase--immersive .showcase-card--slot-2 {
+  --base-depth: 38px;
+}
+
+.showcase--immersive .showcase-card-media {
+  animation: immersive-media-float 5.5s ease-in-out infinite;
+  animation-delay: calc(var(--slot-index, 0) * -1.3s);
+}
+
+@keyframes immersive-media-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.015);
+  }
+}
+
+.showcase--immersive .showcase-card:hover {
+  border-color: rgba(110, 200, 255, 0.35);
+  box-shadow:
+    0 28px 80px rgba(110, 200, 255, 0.18),
+    0 0 40px rgba(70, 207, 152, 0.08);
+}
+
+.showcase--immersive .showcase-eyebrow {
+  color: #6ec8ff;
+}
+
+.showcase--immersive .showcase-title-line {
+  color: #f0f4ff;
+}
+
+.showcase--immersive .showcase-title-ghost {
+  color: #6ec8ff;
+  opacity: 0.06;
+}
+
+.showcase--immersive .showcase-lead {
+  color: rgba(240, 244, 255, 0.58);
+}
+
+.showcase--immersive .showcase-card-ring {
+  border-color: rgba(70, 207, 152, 0.35);
+}
+
+.showcase--immersive .showcase-tag {
+  background: rgba(110, 200, 255, 0.12);
+  border-color: rgba(110, 200, 255, 0.25);
+  color: #f0f4ff;
+}
+
+.showcase--immersive .showcase-card-content {
+  color: #f0f4ff;
+}
+
+.showcase--immersive .showcase-visit {
+  color: #46cf98;
+}
+
+@media (max-width: 768px) {
+  .showcase--immersive {
+    padding-left: 24px;
+    padding-right: 24px;
+    min-height: auto;
+  }
+
+  .showcase--immersive .showcase-card {
+    transform: perspective(900px)
+      translateY(var(--scroll-float, 0px))
+      rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .showcase-card {
     transform: none !important;
     transition: none !important;
+  }
+
+  .showcase--immersive .showcase-card-media {
+    animation: none !important;
   }
 
   .showcase-card-media img,

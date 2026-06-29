@@ -76,6 +76,11 @@ const { theme, cycleTheme, themeLabel, nextThemeLabel } = useSiteTheme()
   border: 2px solid #000;
 }
 
+.theme-switcher-dot[data-theme='immersive'] {
+  background: linear-gradient(135deg, #6ec8ff, #8b7cf6);
+  box-shadow: 0 0 8px rgba(110, 200, 255, 0.5);
+}
+
 .theme-switcher-label {
   text-transform: uppercase;
 }

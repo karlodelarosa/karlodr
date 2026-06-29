@@ -6,7 +6,6 @@ import WritingSection from '../components/WritingSection.vue'
 import { ABOUT_DATA } from '../data/about'
 import { EXPERTISE_DATA } from '../data/expertise'
 import { EXPERIENCE_DATA } from '../data/experience'
-import { STACK_DATA } from '../data/stack'
 import { CONTRIBUTION_DATA } from '../data/contribution'
 
 const logo = '/logo.png'
@@ -184,26 +183,6 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
               <p v-if="experience.company" class="neo-company">{{ experience.company }}</p>
               <p class="neo-card-desc">{{ experience.description }}</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- stack -->
-    <section id="stack" class="neo-section neo-section-blue">
-      <div
-        v-motion
-        class="neo-container"
-        :initial="{ opacity: 0, y: 80 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 800 } }"
-      >
-        <h2 class="neo-section-title">
-          STACK<span class="neo-dot">.</span>
-        </h2>
-
-        <div class="neo-stack-grid">
-          <div v-for="stack in STACK_DATA" :key="stack" class="neo-stack-item">
-            <img :src="stack" alt="Stack technology" class="neo-stack-logo" />
           </div>
         </div>
       </div>
@@ -786,34 +765,6 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
 
 .neo-card-timeline {
   margin-bottom: 32px;
-}
-
-/* stack */
-.neo-stack-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.neo-stack-item {
-  background: var(--neo-bg);
-  border: var(--neo-border);
-  box-shadow: var(--neo-shadow-sm);
-  padding: 20px 28px;
-  transition: all 0.15s ease;
-}
-
-.neo-stack-item:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--neo-shadow);
-  background: var(--neo-yellow);
-}
-
-.neo-stack-logo {
-  max-height: 48px;
-  width: auto;
-  display: block;
 }
 
 /* contributions */

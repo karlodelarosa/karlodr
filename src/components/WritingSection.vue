@@ -4,7 +4,7 @@ import OpenLink from './svg/OpenLink.vue'
 import { WRITING_DATA } from '../data/writing'
 
 defineProps<{
-  variant: 'bento' | 'classic' | 'brutalist'
+  variant: 'bento' | 'classic' | 'brutalist' | 'immersive'
 }>()
 
 interface DevToArticle {
@@ -50,17 +50,34 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section :id="variant === 'classic' ? undefined : 'writing'" :class="['writing-section', `writing-section--${variant}`]">
-    <div :class="variant === 'classic' ? 'classic-container' : variant === 'bento' ? 'bento-shell' : 'neo-section-inner'">
+  <section
+    :id="variant === 'classic' ? undefined : 'writing'"
+    :class="['writing-section', `writing-section--${variant}`, { 'immersive-snap-chapter': variant === 'immersive' }]"
+  >
+    <div
+      :class="
+        variant === 'classic'
+          ? 'classic-container'
+          : variant === 'bento'
+            ? 'bento-shell'
+            : variant === 'immersive'
+              ? 'immersive-shell'
+              : 'neo-section-inner'
+      "
+    >
       <div
-        v-if="variant === 'bento'"
+        v-if="variant === 'bento' || variant === 'immersive'"
         v-motion
-        class="bento-section-head"
+        :class="variant === 'immersive' ? 'immersive-section-head' : 'bento-section-head'"
         :initial="{ opacity: 0, y: 40 }"
         :visible="{ opacity: 1, y: 0, transition: { duration: 700 } }"
       >
-        <h2 class="bento-section-title">Writing</h2>
-        <p>Notes on frontend craft — also on <a :href="WRITING_DATA.profileUrl" target="_blank" rel="noopener noreferrer" class="writing-profile-link">Dev.to</a>.</p>
+        <p v-if="variant === 'immersive'" class="immersive-section-eyebrow">05 — Writing</p>
+        <h2 :class="variant === 'immersive' ? 'immersive-section-title' : 'bento-section-title'">Writing</h2>
+        <p>
+          Notes on frontend craft — also on
+          <a :href="WRITING_DATA.profileUrl" target="_blank" rel="noopener noreferrer" :class="variant === 'immersive' ? 'immersive-profile-link' : 'writing-profile-link'">Dev.to</a>.
+        </p>
       </div>
 
       <header v-else-if="variant === 'classic'" class="classic-section-head">
@@ -81,7 +98,9 @@ onMounted(async () => {
             ? 'classic-writing-grid'
             : variant === 'bento'
               ? 'bento-grid bento-grid-writing'
-              : 'neo-writing-grid'
+              : variant === 'immersive'
+                ? 'immersive-writing-grid'
+                : 'neo-writing-grid'
         "
       >
         <p v-if="loading && variant !== 'classic'" class="writing-loading">Loading posts…</p>
@@ -95,26 +114,30 @@ onMounted(async () => {
               ? 'classic-writing-card'
               : variant === 'bento'
                 ? 'bento-cell cell-writing'
-                : 'neo-card neo-writing-card'
+                : variant === 'immersive'
+                  ? 'immersive-writing-card'
+                  : 'neo-card neo-writing-card'
           "
           :initial="variant !== 'classic' ? { opacity: 0, y: 24 } : undefined"
           :visible="variant !== 'classic' ? { opacity: 1, y: 0, transition: { duration: 600, delay: i * 80 } } : undefined"
         >
-          <span v-if="post.date && variant === 'bento'" class="cell-label">{{ post.date }}</span>
+          <span v-if="post.date && (variant === 'bento' || variant === 'immersive')" :class="variant === 'immersive' ? 'immersive-writing-date' : 'cell-label'">{{ post.date }}</span>
           <h3
             :class="
               variant === 'classic'
                 ? 'classic-writing-title'
                 : variant === 'bento'
                   ? 'writing-title'
-                  : 'neo-writing-title'
+                  : variant === 'immersive'
+                    ? 'immersive-writing-title'
+                    : 'neo-writing-title'
             "
           >
             {{ post.title }}
           </h3>
           <p
             v-if="post.description"
-            :class="variant === 'classic' ? 'classic-writing-desc' : variant === 'bento' ? 'writing-desc' : 'neo-writing-desc'"
+            :class="variant === 'classic' ? 'classic-writing-desc' : variant === 'bento' ? 'writing-desc' : variant === 'immersive' ? 'immersive-writing-desc' : 'neo-writing-desc'"
           >
             {{ post.description }}
           </p>
@@ -122,9 +145,9 @@ onMounted(async () => {
             :href="post.url"
             target="_blank"
             rel="noopener noreferrer"
-            :class="variant === 'classic' ? 'classic-writing-link' : variant === 'bento' ? 'contrib-link' : 'neo-writing-link'"
+            :class="variant === 'classic' ? 'classic-writing-link' : variant === 'bento' ? 'contrib-link' : variant === 'immersive' ? 'immersive-writing-link' : 'neo-writing-link'"
           >
-            <OpenLink :class="variant === 'classic' ? 'classic-link-icon' : variant === 'bento' ? 'contrib-icon' : 'neo-open-icon'" />
+            <OpenLink :class="variant === 'classic' ? 'classic-link-icon' : variant === 'bento' ? 'contrib-icon' : variant === 'immersive' ? 'immersive-link-icon' : 'neo-open-icon'" />
             Read on Dev.to
           </a>
         </article>
@@ -432,6 +455,131 @@ onMounted(async () => {
 @media (min-width: 768px) {
   .classic-writing-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Immersive */
+.writing-section--immersive {
+  position: relative;
+  z-index: 2;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.writing-section--immersive .immersive-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 28px 0 72px;
+}
+
+.writing-section--immersive .immersive-section-head {
+  margin-bottom: 24px;
+}
+
+.writing-section--immersive .immersive-section-head p {
+  color: rgba(240, 244, 255, 0.58);
+  max-width: 560px;
+}
+
+.writing-section--immersive .immersive-section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6ec8ff;
+  margin-bottom: 12px;
+}
+
+.writing-section--immersive .immersive-section-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  color: #f0f4ff;
+}
+
+.writing-section--immersive .immersive-profile-link {
+  color: #46cf98;
+  text-decoration: underline;
+}
+
+.immersive-writing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.immersive-writing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(110, 200, 255, 0.12);
+  background: rgba(8, 10, 22, 0.55);
+  backdrop-filter: blur(16px);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.immersive-writing-card:hover {
+  border-color: rgba(110, 200, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.immersive-writing-date {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 244, 255, 0.5);
+}
+
+.immersive-writing-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #f0f4ff;
+}
+
+.immersive-writing-desc {
+  font-size: 0.88rem;
+  color: rgba(240, 244, 255, 0.58);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.immersive-writing-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6ec8ff;
+  text-decoration: none;
+}
+
+.immersive-writing-link:hover {
+  text-decoration: underline;
+}
+
+.immersive-link-icon {
+  width: 12px;
+}
+
+@media (min-width: 768px) {
+  .immersive-writing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .writing-section--immersive .immersive-shell {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 </style>
