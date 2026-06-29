@@ -174,14 +174,14 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
             :key="`${experience.title}-${experience.date}`"
             class="neo-timeline-item"
           >
-            <div class="neo-timeline-date">
-              <span class="neo-date-box">{{ experience.date }}</span>
-            </div>
             <div class="neo-timeline-line" :class="{ last: i === EXPERIENCE_DATA.length - 1 }" />
             <div class="neo-card neo-card-timeline">
-              <h3 class="neo-card-title">{{ experience.title }}</h3>
-              <p v-if="experience.company" class="neo-company">{{ experience.company }}</p>
-              <p class="neo-card-desc">{{ experience.description }}</p>
+              <span class="neo-date-box">{{ experience.date }}</span>
+              <div class="neo-card-timeline-body">
+                <h3 class="neo-card-title">{{ experience.title }}</h3>
+                <p v-if="experience.company" class="neo-company">{{ experience.company }}</p>
+                <p class="neo-card-desc">{{ experience.description }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -729,42 +729,50 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
 .neo-timeline {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
 }
 
 .neo-timeline-item {
-  display: grid;
-  grid-template-columns: 120px 24px 1fr;
-  gap: 0 16px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .neo-date-box {
   display: inline-block;
+  width: fit-content;
   background: var(--neo-red);
   color: white;
   border: var(--neo-border);
   box-shadow: var(--neo-shadow-sm);
-  padding: 8px 12px;
+  padding: 6px 10px;
   font-weight: 900;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  white-space: nowrap;
+  letter-spacing: 0.04em;
 }
 
 .neo-timeline-line {
-  width: 3px;
-  min-height: 100%;
-  background: var(--neo-black);
-  margin: 0 auto;
-}
-
-.neo-timeline-line.last {
-  min-height: 40px;
+  display: none;
 }
 
 .neo-card-timeline {
-  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.neo-card-timeline-body {
+  width: 100%;
+  background: var(--neo-bg);
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  padding: 20px;
 }
 
 /* contributions */
@@ -904,8 +912,49 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .neo-timeline {
+    gap: 0;
+  }
+
   .neo-timeline-item {
-    grid-template-columns: 140px 24px 1fr;
+    display: grid;
+    grid-template-columns: max-content 24px 1fr;
+    gap: 0 16px;
+    align-items: start;
+  }
+
+  .neo-card-timeline {
+    display: contents;
+  }
+
+  .neo-card-timeline .neo-date-box {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .neo-timeline-line {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    width: 3px;
+    min-height: 100%;
+    background: var(--neo-black);
+    margin: 0 auto;
+  }
+
+  .neo-timeline-line.last {
+    min-height: 40px;
+  }
+
+  .neo-card-timeline-body {
+    grid-column: 3;
+    grid-row: 1;
+    margin-bottom: 32px;
+    padding: 24px;
   }
 }
 
