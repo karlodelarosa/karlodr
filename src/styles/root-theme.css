@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+.root-page {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --surface-hover: #121212;
+  --text: #ededed;
+  --text-muted: #555555;
+  --accent: #38bdf8;
+  --border: #1f1f1f;
+  --terminal-green: #4ade80;
+
+  font-family: 'Geist', -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 6rem 2rem 4rem;
+  min-height: 100vh;
+}
+
+.root-page .container {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.root-page .root-page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.root-page .directory-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.root-page .root-page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.root-page .title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.root-page .timestamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Boxed cards — used for Labs project links */
+.root-page .section-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.root-page .section-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+
+.root-page .section-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.2s ease;
+}
+
+.root-page .section-card-link:hover {
+  background: var(--surface-hover);
+  border-color: #333;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root-page .section-card-link {
+    transform: none;
+  }
+}
+
+.root-page .section-card-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.root-page .section-card-desc {
+  font-size: 0.85rem;
+  color: #a3a3a3;
+  margin-top: 0.35rem;
+}
+
+.root-page .section-card-tags {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+/* Now stack — category label + content, used on /now */
+.root-page .now-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.root-page .now-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+}
+
+.root-page .category-side {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.root-page .now-item .content-side {
+  gap: 0.5rem;
+}
+
+.root-page .now-item h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.root-page .now-item p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.root-page .now-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.root-page .now-list li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.root-page .now-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.root-page .config-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.root-page .config-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.root-page .config-row:first-child {
+  padding-top: 0;
+}
+
+.root-page .config-row a {
+  text-decoration: none;
+}
+
+.root-page .config-row a:hover {
+  color: #fff;
+}
+
+/* Timeline — two-column entries for dated history (e.g. Experience) */
+.root-page .timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.root-page .timeline-item {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.root-page .timeline-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.root-page .meta-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.root-page .period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.root-page .tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.root-page .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.root-page .content-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.root-page .role-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.root-page .company {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.root-page .role-desc {
+  font-size: 0.9rem;
+  color: #a3a3a3;
+}
+
+.root-page .dia-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.root-page .dia-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.root-page .dia-val.accent {
+  color: var(--accent);
+}
+
+.root-page footer {
+  margin-top: 6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.root-page footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.root-page footer a:hover {
+  color: #fff;
+}
+
+.root-page .root-back {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.15s ease;
+}
+
+.root-page .root-back:hover {
+  color: var(--accent);
+}
+
+.root-page .root-page-heading {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 550px) {
+  .root-page {
+    padding: 4rem 1rem;
+  }
+
+  .root-page .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-bottom: 2rem;
+  }
+
+  .root-page .meta-side {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .root-page .config-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .root-page .title-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .root-page .now-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .root-page .category-side {
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 0.25rem;
+  }
+}

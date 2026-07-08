@@ -45,7 +45,7 @@ const ACCENT_COLORS = ['#FFE566', '#FF6B6B', '#4ECDC4', '#6C5CE7', '#FF9F43']
     <header class="neo-nav">
       <button class="neo-logo" @click="scrollToTop">
         <img :src="logo" alt="Karlo Dela Rosa | Logo" class="neo-logo-img" />
-        <span class="neo-logo-text">karlodr.dev</span>
+        <span class="neo-logo-text">karlodr.com</span>
       </button>
 
       <a

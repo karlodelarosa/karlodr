@@ -65,7 +65,7 @@ const ACCENTS = ['#297ccf', '#46cf98', '#04b6c1', '#6c5ce7', '#ff9f43']
     <header class="bento-nav">
       <button class="bento-brand" @click="scrollToTop">
         <img :src="logo" alt="Karlo Dela Rosa" class="bento-brand-logo" />
-        <span>karlodr.dev</span>
+        <span>karlodr.com</span>
       </button>
 
       <a

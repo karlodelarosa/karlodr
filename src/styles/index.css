@@ -57,17 +57,14 @@
 
 html {
   scroll-behavior: smooth;
-  cursor: url('../circle2.svg'), auto;
+  cursor: url('/crosshair.svg') 12 12, auto;
 }
 
 body {
   min-height: 100vh;
   height: fit-content;
-  color: black;
-  background: white;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  color: #ededed;
+  background: #000;
   line-height: 1.6;
   font-family:
     montserrat,

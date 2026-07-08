@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://karlodr.dev/sitemap.xml
+Sitemap: https://karlodr.com/sitemap.xml

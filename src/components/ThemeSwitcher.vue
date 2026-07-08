@@ -62,6 +62,18 @@ const { theme, cycleTheme, themeLabel, nextThemeLabel } = useSiteTheme()
   flex-shrink: 0;
 }
 
+.theme-switcher-dot[data-theme='root'] {
+  background: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
+}
+
+.theme-switcher-dot[data-theme='signal'] {
+  background: #38bdf8;
+  box-shadow:
+    0 0 6px rgba(56, 189, 248, 0.6),
+    inset 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
 .theme-switcher-dot[data-theme='bento'] {
   background: linear-gradient(135deg, #297ccf, #46cf98);
 }

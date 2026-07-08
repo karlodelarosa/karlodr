@@ -1,61 +1,10 @@
 <script setup lang="ts">
-import { computed, watch, onMounted, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import BentoHome from './BentoHome.vue'
-import TheHome from './TheHome.vue'
-import NewHome2 from './NewHome2.vue'
-import ThemeSwitcher from '../components/ThemeSwitcher.vue'
-import { useSiteTheme, type SiteTheme } from '../composables/useSiteTheme'
-
-const ImmersiveHome = defineAsyncComponent(() => import('./ImmersiveHome.vue'))
-
-const route = useRoute()
-const router = useRouter()
-const { theme, setTheme } = useSiteTheme()
-
-const themeComponents = {
-  bento: BentoHome,
-  classic: TheHome,
-  brutalist: NewHome2,
-  immersive: ImmersiveHome,
-} as const
-
-const activeComponent = computed(() => themeComponents[theme.value])
-
-function parseThemeQuery(value: unknown): SiteTheme | null {
-  if (value === 'bento' || value === 'classic' || value === 'brutalist' || value === 'immersive') {
-    return value
-  }
-  if (value === 'new') return 'brutalist'
-  return null
-}
-
-onMounted(() => {
-  const fromQuery = parseThemeQuery(route.query.theme)
-  if (fromQuery) {
-    setTheme(fromQuery, { scroll: false })
-    router.replace({ path: '/', query: {} })
-  }
-})
-
-watch(
-  () => route.query.theme,
-  (value) => {
-    const parsed = parseThemeQuery(value)
-    if (parsed) {
-      setTheme(parsed, { scroll: false })
-      router.replace({ path: '/', query: {} })
-    }
-  }
-)
+import RootHome from './RootHome.vue'
 </script>
 
 <template>
   <div class="home-shell">
-    <transition appear mode="out-in" enter-active-class="animate__animated animate__fadeIn">
-      <component :is="activeComponent" :key="theme" />
-    </transition>
-    <ThemeSwitcher />
+    <RootHome />
   </div>
 </template>
 

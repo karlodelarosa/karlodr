@@ -38,7 +38,7 @@ onMounted(() => {
     <header class="classic-nav">
       <button class="classic-logo" @click="scrollToTop">
         <img :src="logo" alt="Karlo Dela Rosa | Logo" class="classic-logo-img" />
-        <span class="classic-logo-text">karlodr.dev</span>
+        <span class="classic-logo-text">karlodr.com</span>
       </button>
 
       <a

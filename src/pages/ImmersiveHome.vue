@@ -156,7 +156,7 @@ const ACCENTS = ['#6ec8ff', '#46cf98', '#04b6c1', '#8b7cf6', '#ff9f6a']
     <header class="immersive-nav">
       <button type="button" class="immersive-brand" @click="scrollToTop">
         <img :src="logo" alt="Karlo Dela Rosa" class="immersive-brand-logo" />
-        <span>karlodr.dev</span>
+        <span>karlodr.com</span>
       </button>
       <a
         class="immersive-nav-link"

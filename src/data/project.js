@@ -67,6 +67,14 @@ export const PROJECT_DATA = [
         url: 'https://cat-library.vercel.app/',
         tags: ['Vue'],
       },
+      {
+        title: 'Music Playground',
+        description: 'Interactive tool for learning music',
+        thumbnail: '/projects/music_playground_thumbnail.svg',
+        url: 'https://music-playground.pages.dev/',
+        tags: ['Vue'],
+        featured: true,
+      },
     ],
   },
   {
