@@ -1,25 +1,38 @@
 export const NOW_DATA = {
-  lastUpdated: 'LAST_UPDATED: Q3 2026',
+  lastUpdated: 'LAST UPDATED · Q3 2026',
+
   items: [
+    {
+      category: '/ work',
+      title: 'Consulting in Composable Commerce',
+      description:
+        'Working as a full-stack consultant, building and maintaining modern e-commerce and CMS solutions for enterprise clients.',
+    },
     {
       category: '/ building',
       title: 'Lyric Lens & Ministry Lens',
-      description: 'Refining org-based auth flows and the presentation tooling worship teams use week to week.',
+      description:
+        'Designing tools that help churches manage songs, worship lineups, and live presentations with a faster, simpler workflow.',
     },
     {
       category: '/ learning',
-      title: 'E-Commerce',
-      description: 'Building e-commerce solutions for small businesses and startups.',
+      title: 'Creative Engineering',
+      description:
+        'Exploring immersive interfaces, 3D experiences, and interaction design to create more engaging products.',
     },
     {
-      category: '/ logistics',
-      title: 'Based in Bulacan',
-      description: 'Remote-first, PH time zone.',
+      category: '/ location',
+      title: 'Based in Bulacan, Philippines',
+      description:
+        'Working remotely and collaborating with teams across different time zones.',
     },
   ],
+
   focusList: [
-    'Shipping features for Ministry Lens',
-    'Exploring Cloudflare Workers patterns',
-    'Iterating on this site',
+    'Building scalable e-commerce experiences',
+    'Growing as a full-stack consultant',
+    'Shipping new features for Ministry Lens',
+    'Exploring creative web experiences with Three.js',
+    'Continuously improving this portfolio',
   ],
 }

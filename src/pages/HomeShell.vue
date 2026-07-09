@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import RootHome from './RootHome.vue'
+import EditorialHome from './EditorialHome.vue'
 </script>
 
 <template>
   <div class="home-shell">
-    <RootHome />
+    <EditorialHome />
   </div>
 </template>
 

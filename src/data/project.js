@@ -69,7 +69,7 @@ export const PROJECT_DATA = [
       },
       {
         title: 'Music Playground',
-        description: 'Interactive tool for learning music',
+        description: 'Interactive tool to help musicians learn music',
         thumbnail: '/projects/music_playground_thumbnail.svg',
         url: 'https://music-playground.pages.dev/',
         tags: ['Vue'],
