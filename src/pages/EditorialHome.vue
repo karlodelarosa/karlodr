@@ -1,18 +1,91 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { FEATURED_PROJECTS } from '../data/project'
 import EditorialSocialLinks from '../components/EditorialSocialLinks.vue'
+import { useManilaClock } from '../composables/useManilaClock'
+
+const { time: manilaTime } = useManilaClock()
+
+const cyclingWords = ['ministry platforms', 'church sites', 'SaaS dashboards', 'internal tools']
+const wordIndex = ref(0)
+const displayedWord = ref(cyclingWords[0])
+const wordFading = ref(false)
+
+let wordTimer: ReturnType<typeof setInterval> | null = null
+let fadeTimer: ReturnType<typeof setTimeout> | null = null
+
+onMounted(() => {
+  wordTimer = setInterval(() => {
+    wordFading.value = true
+    fadeTimer = setTimeout(() => {
+      wordIndex.value = (wordIndex.value + 1) % cyclingWords.length
+      displayedWord.value = cyclingWords[wordIndex.value]
+      wordFading.value = false
+    }, 300)
+  }, 3000)
+})
+
+onUnmounted(() => {
+  if (wordTimer) clearInterval(wordTimer)
+  if (fadeTimer) clearTimeout(fadeTimer)
+})
+
+const marqueeWords = ['AVAILABLE FOR SELECTED PROJECTS', 'BASED IN MANILA, PH', 'FULL-STACK & UI SYSTEMS', 'OPEN TO COLLABORATE']
+const marqueeText = `${Array.from({ length: 6 }, () => marqueeWords.join('  //  ')).join('  //  ')}  //  `
 
 const indexItems = FEATURED_PROJECTS.map((project) => ({
   title: project.title,
   url: project.url,
   tag: project.tags[0],
+  thumbnail: project.thumbnail,
 }))
+
+const hoverIndex = ref<number | null>(null)
+const previewRef = ref<HTMLElement | null>(null)
+
+function onRowEnter(index: number, event: MouseEvent) {
+  hoverIndex.value = index
+  requestAnimationFrame(() => {
+    const el = previewRef.value
+    if (el) {
+      el.style.left = `${event.clientX}px`
+      el.style.top = `${event.clientY}px`
+    }
+  })
+}
+
+function onRowLeave() {
+  hoverIndex.value = null
+}
+
+function onRowMove(event: MouseEvent) {
+  const el = previewRef.value
+  if (el) {
+    el.style.left = `${event.clientX}px`
+    el.style.top = `${event.clientY}px`
+  }
+}
+
+function onMagneticMove(event: MouseEvent, strength = 0.35, max = 14) {
+  const el = event.currentTarget as HTMLElement
+  const rect = el.getBoundingClientRect()
+  const relX = event.clientX - (rect.left + rect.width / 2)
+  const relY = event.clientY - (rect.top + rect.height / 2)
+  const x = Math.max(-max, Math.min(max, relX * strength))
+  const y = Math.max(-max, Math.min(max, relY * strength))
+  el.style.transform = `translate(${x}px, ${y}px)`
+}
+
+function onMagneticLeave(event: MouseEvent) {
+  ;(event.currentTarget as HTMLElement).style.transform = ''
+}
 </script>
 
 <template>
   <div class="editorial-page">
     <div class="bg-numeral">26</div>
+    <div class="grain-overlay" aria-hidden="true"></div>
 
     <header>
       <div class="brand-col">
@@ -21,48 +94,77 @@ const indexItems = FEATURED_PROJECTS.map((project) => ({
       </div>
       <div class="header-issue">
         SYS_INDEX // VOL. I_MXXVI<br />
-        FRONTEND ENGINEERING &amp; UI SYSTEMS
+        FRONTEND ENGINEERING &amp; UI SYSTEMS<br />
+        MNL // {{ manilaTime }}
       </div>
     </header>
 
     <main>
       <div class="hero-statement">
         <h1>
-          Engineering<br />
-          <span class="serif-alt">fast, intentional</span> product<br />
-          interfaces.
+          <span class="kinetic-line">Engineering</span><br />
+          <span class="serif-alt" :class="{ 'is-fading': wordFading }">{{ displayedWord }}</span><br />
+          <span class="kinetic-line line-2">systems that ship.</span>
         </h1>
       </div>
 
       <div class="editorial-sidebar">
-        <div class="section-tag">Core Directive <span>[01]</span></div>
-        <p>
-          Frontend developer and lead — wireframes to production, component systems, teams that
-          ship. Lately: Lyric Lens, Ministry Lens, ELGC Church.
-        </p>
+        <div class="sidebar-section">
+          <div class="section-tag">Core Directive <span>[01]</span></div>
+          <p>
+            Developer, consultant, and builder. I enjoy turning ideas into thoughtful digital products—from enterprise commerce solutions to mission-driven software that helps <i class="font-semibold">organizations, communities, and churches</i> do their best work.
+          </p>
+        </div>
 
-        <div class="editorial-index">
-          <a
-            v-for="(item, index) in indexItems"
-            :key="item.title"
-            :href="item.url"
-            class="index-row"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ String(index + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
-          </a>
+        <div class="sidebar-section">
+          <div class="section-tag">Selected Work <span>[02]</span></div>
+          <div class="editorial-index">
+            <a
+              v-for="(item, index) in indexItems"
+              :key="item.title"
+              :href="item.url"
+              class="index-row"
+              target="_blank"
+              rel="noopener noreferrer"
+              @mouseenter="onRowEnter(index, $event)"
+              @mouseleave="onRowLeave"
+              @mousemove="onRowMove"
+            >
+              {{ String(index + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
+            </a>
+          </div>
         </div>
       </div>
     </main>
 
+    <transition name="thumb-fade">
+      <div
+        v-if="hoverIndex !== null"
+        ref="previewRef"
+        class="thumb-preview"
+        :style="{ backgroundImage: `url(${indexItems[hoverIndex].thumbnail})` }"
+      />
+    </transition>
+
     <footer>
       <nav class="nav-links">
-        <RouterLink to="/experience" class="nav-item">Experience</RouterLink>
-        <RouterLink to="/now" class="nav-item">Now</RouterLink>
+        <RouterLink to="/experience" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Experience</RouterLink>
+        <RouterLink to="/now" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Now</RouterLink>
       </nav>
-      <a href="mailto:karlordr@gmail.com" class="cta-button">Get In Touch →</a>
+      <a
+        href="mailto:karlordr@gmail.com"
+        class="cta-button"
+        @mousemove="onMagneticMove($event, 0.3, 14)"
+        @mouseleave="onMagneticLeave"
+      ><span>Get In Touch →</span></a>
     </footer>
+
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-content">{{ marqueeText }}</span>
+        <span class="marquee-content">{{ marqueeText }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -99,6 +201,107 @@ const indexItems = FEATURED_PROJECTS.map((project) => ({
   z-index: 0;
   line-height: 1;
   user-select: none;
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  animation: grain-shift 1s steps(8) infinite;
+}
+
+@keyframes grain-shift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-2%, -4%);
+  }
+  20% {
+    transform: translate(-6%, 2%);
+  }
+  30% {
+    transform: translate(4%, -6%);
+  }
+  40% {
+    transform: translate(-2%, 6%);
+  }
+  50% {
+    transform: translate(-6%, 4%);
+  }
+  60% {
+    transform: translate(6%, 0%);
+  }
+  70% {
+    transform: translate(0%, 4%);
+  }
+  80% {
+    transform: translate(-4%, -2%);
+  }
+  90% {
+    transform: translate(4%, 2%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay {
+    animation: none;
+  }
+}
+
+.marquee-strip {
+  width: calc(100% + 128px);
+  margin: 8px -64px 0;
+  overflow: hidden;
+  background-color: transparent;
+  z-index: 10;
+  position: relative;
+  border: 1px solid #e2e8f0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 270s linear infinite;
+}
+
+.marquee-strip:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 5px 0;
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #080809;
+  white-space: pre;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .marquee-strip {
+    width: calc(100% + 64px);
+    margin: 8px -32px 0;
+  }
 }
 
 header {
@@ -159,7 +362,7 @@ main {
 @media (min-width: 1024px) {
   main {
     grid-template-columns: 7fr 5fr;
-    align-items: end;
+    align-items: center;
     gap: 96px;
   }
 }
@@ -177,11 +380,44 @@ h1 {
 }
 
 h1 .serif-alt {
+  display: inline-block;
   font-family: 'Didot', 'Bodoni MT', 'Cinzel', 'Georgia', serif;
   font-style: italic;
   font-weight: 300;
-  text-transform: lowercase;
+  text-transform: none;
   letter-spacing: -0.02em;
+  animation: serif-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.25s;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+h1 .serif-alt.is-fading {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.kinetic-line {
+  display: inline-block;
+  animation: serif-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  font-weight: bolder;
+}
+
+.kinetic-line.line-2 {
+  animation-delay: 0.5s;
+  font-weight: bolder;
+}
+
+@keyframes serif-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .editorial-sidebar {
@@ -190,6 +426,12 @@ h1 .serif-alt {
   gap: 32px;
   margin-top: 48px;
   max-width: 420px;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 @media (min-width: 1024px) {
@@ -288,6 +530,8 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   position: relative;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .nav-item::after {
@@ -309,6 +553,8 @@ footer {
 }
 
 .cta-button {
+  position: relative;
+  overflow: hidden;
   font-size: 12px;
   font-weight: 900;
   color: #fcfbfa;
@@ -318,13 +564,27 @@ footer {
   letter-spacing: 0.15em;
   padding: 14px 32px;
   width: max-content;
-  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.cta-button:hover {
+.cta-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-color: #475569;
-  transform: translateY(-2px);
+  transform: translate(-100%, 100%) rotate(8deg);
+  transform-origin: bottom left;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cta-button:hover::before {
+  transform: translate(0, 0) rotate(0deg);
 }
 
 @media (max-width: 1023px) {
@@ -337,5 +597,43 @@ footer {
   .editorial-page {
     padding: 32px;
   }
+}
+
+.thumb-preview {
+  position: fixed;
+  z-index: 100;
+  width: 240px;
+  height: 150px;
+  background-color: #f1f0ec;
+  background-size: cover;
+  background-position: center;
+  border-radius: 2px;
+  box-shadow: 0 20px 40px rgba(8, 8, 9, 0.18);
+  pointer-events: none;
+  transform: translate(24px, -50%);
+  will-change: left, top;
+}
+
+@media (max-width: 1023px) {
+  .thumb-preview {
+    display: none;
+  }
+}
+
+.thumb-fade-enter-active {
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.thumb-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.thumb-fade-enter-from {
+  opacity: 0;
+  transform: translate(16px, -50%) scale(0.94);
+}
+
+.thumb-fade-leave-to {
+  opacity: 0;
 }
 </style>

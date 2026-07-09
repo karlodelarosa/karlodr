@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import EditorialSocialLinks from './EditorialSocialLinks.vue'
+import { useManilaClock } from '../composables/useManilaClock'
 
 defineProps<{
   numeral: string
   eyebrow: string
   timestamp?: string
 }>()
+
+const { time: manilaTime } = useManilaClock()
 </script>
 
 <template>
@@ -19,7 +22,8 @@ defineProps<{
       </div>
       <div class="header-issue">
         {{ eyebrow }}<br v-if="timestamp" />
-        <template v-if="timestamp">{{ timestamp }}</template>
+        <template v-if="timestamp">{{ timestamp }}<br /></template>
+        MNL // {{ manilaTime }}
       </div>
     </header>
 
@@ -40,7 +44,7 @@ defineProps<{
         <RouterLink to="/experience" class="nav-item">Experience</RouterLink>
         <RouterLink to="/now" class="nav-item">Now</RouterLink>
       </nav>
-      <a href="mailto:karlordr@gmail.com" class="cta-button">Get In Touch →</a>
+      <a href="mailto:karlordr@gmail.com" class="cta-button"><span>Get In Touch →</span></a>
     </footer>
   </div>
 </template>
@@ -141,11 +145,27 @@ h1 {
 }
 
 h1 :deep(.serif-alt) {
+  display: inline-block;
   font-family: 'Didot', 'Bodoni MT', 'Cinzel', 'Georgia', serif;
   font-style: italic;
   font-weight: 300;
   text-transform: lowercase;
   letter-spacing: -0.02em;
+  animation: serif-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.2s;
+}
+
+@keyframes serif-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .subtitle {
@@ -210,6 +230,8 @@ footer {
 }
 
 .cta-button {
+  position: relative;
+  overflow: hidden;
   font-size: 12px;
   font-weight: 900;
   color: #fcfbfa;
@@ -219,13 +241,26 @@ footer {
   letter-spacing: 0.15em;
   padding: 14px 32px;
   width: max-content;
-  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.cta-button:hover {
+.cta-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-color: #475569;
-  transform: translateY(-2px);
+  transform: translate(-100%, 100%) rotate(8deg);
+  transform-origin: bottom left;
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cta-button:hover::before {
+  transform: translate(0, 0) rotate(0deg);
 }
 
 @media (max-width: 768px) {

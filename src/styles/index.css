@@ -60,11 +60,16 @@ html {
   cursor: url('/crosshair.svg') 12 12, auto;
 }
 
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
 body {
   min-height: 100vh;
   height: fit-content;
   color: #ededed;
-  background: #000;
+  background: #fcfbfa;
   line-height: 1.6;
   font-family:
     montserrat,
