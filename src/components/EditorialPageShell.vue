@@ -43,6 +43,7 @@ const { time: manilaTime } = useManilaClock()
         <RouterLink to="/" class="nav-item">Home</RouterLink>
         <RouterLink to="/experience" class="nav-item">Experience</RouterLink>
         <RouterLink to="/now" class="nav-item">Now</RouterLink>
+        <RouterLink to="/me" class="nav-item">Me</RouterLink>
       </nav>
       <a href="mailto:karlordr@gmail.com" class="cta-button"><span>Get In Touch →</span></a>
     </footer>

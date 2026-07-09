@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeShell from '../pages/HomeShell.vue'
+import MePage from '../pages/MePage.vue'
 import RootExperience from '../pages/root/RootExperience.vue'
 import RootLabs from '../pages/root/RootLabs.vue'
 import RootNow from '../pages/root/RootNow.vue'
@@ -40,6 +41,14 @@ const router = createRouter({
       component: RootNow,
       meta: {
         title: 'Now — Karlo Dela Rosa',
+      },
+    },
+    {
+      path: '/me',
+      name: 'me',
+      component: MePage,
+      meta: {
+        title: 'Me — Karlo Dela Rosa',
       },
     },
     {

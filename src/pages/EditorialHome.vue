@@ -4,8 +4,10 @@ import { RouterLink } from 'vue-router'
 import { FEATURED_PROJECTS } from '../data/project'
 import EditorialSocialLinks from '../components/EditorialSocialLinks.vue'
 import { useManilaClock } from '../composables/useManilaClock'
+import { useMagnetic } from '../composables/useMagnetic'
 
 const { time: manilaTime } = useManilaClock()
+const { onMagneticMove, onMagneticLeave } = useMagnetic()
 
 const cyclingWords = ['ministry platforms', 'church sites', 'SaaS dashboards', 'internal tools']
 const wordIndex = ref(0)
@@ -67,19 +69,6 @@ function onRowMove(event: MouseEvent) {
   }
 }
 
-function onMagneticMove(event: MouseEvent, strength = 0.35, max = 14) {
-  const el = event.currentTarget as HTMLElement
-  const rect = el.getBoundingClientRect()
-  const relX = event.clientX - (rect.left + rect.width / 2)
-  const relY = event.clientY - (rect.top + rect.height / 2)
-  const x = Math.max(-max, Math.min(max, relX * strength))
-  const y = Math.max(-max, Math.min(max, relY * strength))
-  el.style.transform = `translate(${x}px, ${y}px)`
-}
-
-function onMagneticLeave(event: MouseEvent) {
-  ;(event.currentTarget as HTMLElement).style.transform = ''
-}
 </script>
 
 <template>
@@ -93,9 +82,7 @@ function onMagneticLeave(event: MouseEvent) {
         <EditorialSocialLinks />
       </div>
       <div class="header-issue">
-        SYS_INDEX // VOL. I_MXXVI<br />
-        FRONTEND ENGINEERING &amp; UI SYSTEMS<br />
-        MNL // {{ manilaTime }}
+        <span class="live-dot" aria-hidden="true"></span>MNL // {{ manilaTime }}
       </div>
     </header>
 
@@ -147,9 +134,16 @@ function onMagneticLeave(event: MouseEvent) {
     </transition>
 
     <footer>
+      <div class="marquee-strip marquee-float" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="marquee-content">{{ marqueeText }}</span>
+          <span class="marquee-content">{{ marqueeText }}</span>
+        </div>
+      </div>
       <nav class="nav-links">
         <RouterLink to="/experience" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Experience</RouterLink>
         <RouterLink to="/now" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Now</RouterLink>
+        <RouterLink to="/me" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Me</RouterLink>
       </nav>
       <a
         href="mailto:karlordr@gmail.com"
@@ -158,13 +152,6 @@ function onMagneticLeave(event: MouseEvent) {
         @mouseleave="onMagneticLeave"
       ><span>Get In Touch →</span></a>
     </footer>
-
-    <div class="marquee-strip" aria-hidden="true">
-      <div class="marquee-track">
-        <span class="marquee-content">{{ marqueeText }}</span>
-        <span class="marquee-content">{{ marqueeText }}</span>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -175,7 +162,7 @@ function onMagneticLeave(event: MouseEvent) {
   flex-direction: column;
   justify-content: space-between;
   gap: 2rem;
-  padding: 64px;
+  padding: 64px 64px 32px;
   background-color: #fcfbfa;
   color: #080809;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -264,6 +251,20 @@ function onMagneticLeave(event: MouseEvent) {
   border: 1px solid #e2e8f0;
 }
 
+.marquee-float {
+  position: absolute;
+  left: -64px;
+  right: -64px;
+  bottom: 100%;
+  width: auto;
+  margin: 0 0 8px;
+  z-index: 20;
+  background-color: transparent;
+  border: 1px solid #e2e8f0;
+  border-left: none;
+  border-right: none;
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
@@ -301,6 +302,13 @@ function onMagneticLeave(event: MouseEvent) {
   .marquee-strip {
     width: calc(100% + 64px);
     margin: 8px -32px 0;
+  }
+
+  .marquee-float {
+    left: -32px;
+    right: -32px;
+    width: auto;
+    margin: 0 0 8px;
   }
 }
 
@@ -343,6 +351,34 @@ header {
   line-height: 1.5;
 }
 
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background-color: #080809;
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .header-issue {
     text-align: right;
@@ -369,6 +405,8 @@ main {
 
 .hero-statement {
   position: relative;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 h1 {
@@ -381,14 +419,22 @@ h1 {
 
 h1 .serif-alt {
   display: inline-block;
+  max-width: 100%;
   font-family: 'Didot', 'Bodoni MT', 'Cinzel', 'Georgia', serif;
   font-style: italic;
   font-weight: 300;
   text-transform: none;
   letter-spacing: -0.02em;
+  white-space: nowrap;
   animation: serif-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.25s;
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@media (max-width: 1023px) {
+  h1 .serif-alt {
+    font-size: clamp(22px, 5.6vw, 92px);
+  }
 }
 
 h1 .serif-alt.is-fading {
