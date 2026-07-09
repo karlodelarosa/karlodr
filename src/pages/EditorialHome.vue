@@ -357,7 +357,7 @@ header {
   height: 6px;
   margin-right: 6px;
   border-radius: 50%;
-  background-color: #080809;
+  background-color: #3457e0;
   animation: live-pulse 2s ease-in-out infinite;
 }
 
@@ -426,6 +426,11 @@ h1 .serif-alt {
   text-transform: none;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  background: linear-gradient(90deg, #659999, #f4791f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   animation: serif-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.25s;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -501,7 +506,7 @@ h1 .serif-alt.is-fading {
 
 .section-tag span {
   font-family: ui-monospace, monospace;
-  color: #64748b;
+  color: #e8823a;
 }
 
 p {
@@ -532,9 +537,9 @@ p {
 }
 
 .index-row:hover {
-  border-bottom-color: #080809;
+  border-bottom-color: #3457e0;
   padding-left: 8px;
-  color: #64748b;
+  color: #3457e0;
 }
 
 .index-row span {
@@ -587,7 +592,7 @@ footer {
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #080809;
+  background-color: #3457e0;
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
@@ -623,7 +628,7 @@ footer {
   content: '';
   position: absolute;
   inset: 0;
-  background-color: #475569;
+  background-color: #e8823a;
   transform: translate(-100%, 100%) rotate(8deg);
   transform-origin: bottom left;
   transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
