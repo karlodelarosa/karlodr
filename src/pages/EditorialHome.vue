@@ -36,7 +36,7 @@ onUnmounted(() => {
 const marqueeWords = ['AVAILABLE FOR SELECTED PROJECTS', 'BASED IN MANILA, PH', 'FULL-STACK & UI SYSTEMS', 'OPEN TO COLLABORATE']
 const marqueeText = `${Array.from({ length: 6 }, () => marqueeWords.join('  //  ')).join('  //  ')}  //  `
 
-const indexItems = FEATURED_PROJECTS.map((project) => ({
+const indexItems = FEATURED_PROJECTS.map((project: { title: string; url: string; tags: string[]; thumbnail: string }) => ({
   title: project.title,
   url: project.url,
   tag: project.tags[0],
@@ -113,11 +113,11 @@ function onRowMove(event: MouseEvent) {
               class="index-row"
               target="_blank"
               rel="noopener noreferrer"
-              @mouseenter="onRowEnter(index, $event)"
+              @mouseenter="onRowEnter(index as number, $event)"
               @mouseleave="onRowLeave"
               @mousemove="onRowMove"
             >
-              {{ String(index + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
+              {{ String(index as number + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
             </a>
           </div>
         </div>
@@ -426,7 +426,8 @@ h1 .serif-alt {
   text-transform: none;
   letter-spacing: -0.02em;
   white-space: nowrap;
-  background: linear-gradient(90deg, #659999, #f4791f);
+  /* background: linear-gradient(90deg, #659999, #f4791f); */
+  background: linear-gradient(90deg, #3457e0, #8a2be2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

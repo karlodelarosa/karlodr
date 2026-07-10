@@ -4,7 +4,7 @@ import { NOW_DATA } from '../../data/now'
 </script>
 
 <template>
-  <EditorialPageShell numeral="03" eyebrow="SYS_INDEX // NOW" :timestamp="NOW_DATA.lastUpdated">
+  <EditorialPageShell numeral="03" eyebrow="SYS_INDEX // NOW">
     <template #title>
       What I'm<br />
       <span class="serif-alt">doing</span> right now

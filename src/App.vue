@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CustomCursor from './components/CustomCursor.vue'
+import IntroLoader from './components/IntroLoader.vue'
 import { useRouteTransition } from './composables/useRouteTransition'
 
 const { phase } = useRouteTransition()
@@ -10,6 +11,7 @@ const { phase } = useRouteTransition()
     <router-view />
   </div>
   <CustomCursor />
+  <IntroLoader />
 </template>
 
 <style scoped>

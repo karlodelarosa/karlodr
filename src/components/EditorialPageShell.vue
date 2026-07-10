@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import EditorialSocialLinks from './EditorialSocialLinks.vue'
-import { useManilaClock } from '../composables/useManilaClock'
-
 defineProps<{
   numeral: string
   eyebrow: string
-  timestamp?: string
 }>()
-
-const { time: manilaTime } = useManilaClock()
 </script>
 
 <template>
@@ -16,15 +10,8 @@ const { time: manilaTime } = useManilaClock()
     <div class="bg-numeral">{{ numeral }}</div>
 
     <header>
-      <div class="brand-col">
-        <RouterLink to="/" class="brand-title">Karlo Dela Rosa / Dev</RouterLink>
-        <EditorialSocialLinks />
-      </div>
-      <div class="header-issue">
-        {{ eyebrow }}<br v-if="timestamp" />
-        <template v-if="timestamp">{{ timestamp }}<br /></template>
-        MNL // {{ manilaTime }}
-      </div>
+      <RouterLink to="/" class="back-link">← Home</RouterLink>
+      <span class="page-tag"><span class="live-dot" aria-hidden="true"></span>{{ eyebrow }}</span>
     </header>
 
     <main>
@@ -76,53 +63,63 @@ const { time: manilaTime } = useManilaClock()
 }
 
 header {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  border-bottom: 3px solid #080809;
-  padding-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   z-index: 10;
   position: relative;
 }
 
-@media (min-width: 768px) {
-  header {
-    grid-template-columns: 6fr 6fr;
-    align-items: baseline;
-  }
-}
-
-.brand-col {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.brand-title {
-  font-size: 15px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
+.back-link {
+  font-size: 12px;
+  font-weight: 800;
   color: #080809;
   text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.2s ease;
 }
 
-.brand-title:hover {
+.back-link:hover {
   color: #64748b;
 }
 
-.header-issue {
+.page-tag {
+  display: inline-flex;
+  align-items: center;
   font-family: ui-monospace, monospace;
   font-size: 11px;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: #64748b;
-  line-height: 1.5;
 }
 
-@media (min-width: 768px) {
-  .header-issue {
-    text-align: right;
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: #64748b;
+  animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
   }
 }
 
