@@ -1,15 +1,32 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+
 defineProps<{
   numeral: string
   eyebrow: string
 }>()
+
+const isScrolled = ref(false)
+
+function onScroll() {
+  isScrolled.value = window.scrollY > 48
+}
+
+onMounted(() => {
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
 </script>
 
 <template>
   <div class="editorial-page">
     <div class="bg-numeral">{{ numeral }}</div>
 
-    <header>
+    <header :class="{ 'is-scrolled': isScrolled }">
       <RouterLink to="/" class="back-link">← Home</RouterLink>
       <span class="page-tag"><span class="live-dot" aria-hidden="true"></span>{{ eyebrow }}</span>
     </header>
@@ -27,7 +44,6 @@ defineProps<{
 
     <footer>
       <nav class="nav-links">
-        <RouterLink to="/" class="nav-item">Home</RouterLink>
         <RouterLink to="/experience" class="nav-item">Experience</RouterLink>
         <RouterLink to="/now" class="nav-item">Now</RouterLink>
         <RouterLink to="/me" class="nav-item">Me</RouterLink>
@@ -43,7 +59,7 @@ defineProps<{
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  padding: 64px;
+  padding: 0 64px 64px;
   background-color: #fcfbfa;
   color: #080809;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -67,8 +83,23 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  z-index: 10;
-  position: relative;
+  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 64px;
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition: background-color 0.15s ease, backdrop-filter 0.15s ease;
+}
+
+header.is-scrolled {
+  background-color: rgba(252, 251, 250, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background-color 0.35s ease, backdrop-filter 0.35s ease;
 }
 
 .back-link {
@@ -128,6 +159,7 @@ main {
   z-index: 10;
   position: relative;
   max-width: 900px;
+  padding-top: 128px;
 }
 
 .hero-statement {
@@ -263,7 +295,15 @@ footer {
 
 @media (max-width: 768px) {
   .editorial-page {
-    padding: 32px;
+    padding: 0 32px 32px;
+  }
+
+  header {
+    padding: 20px 32px;
+  }
+
+  main {
+    padding-top: 96px;
   }
 }
 </style>

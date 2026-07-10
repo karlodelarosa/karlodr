@@ -14,10 +14,20 @@ const wordIndex = ref(0)
 const displayedWord = ref(cyclingWords[0])
 const wordFading = ref(false)
 
+const workOpen = ref(true)
+
+function toggleWork() {
+  workOpen.value = !workOpen.value
+}
+
 let wordTimer: ReturnType<typeof setInterval> | null = null
 let fadeTimer: ReturnType<typeof setTimeout> | null = null
 
 onMounted(() => {
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    workOpen.value = false
+  }
+
   wordTimer = setInterval(() => {
     wordFading.value = true
     fadeTimer = setTimeout(() => {
@@ -104,21 +114,28 @@ function onRowMove(event: MouseEvent) {
         </div>
 
         <div class="sidebar-section">
-          <div class="section-tag">Selected Work <span>[02]</span></div>
-          <div class="editorial-index">
-            <a
-              v-for="(item, index) in indexItems"
-              :key="item.title"
-              :href="item.url"
-              class="index-row"
-              target="_blank"
-              rel="noopener noreferrer"
-              @mouseenter="onRowEnter(index as number, $event)"
-              @mouseleave="onRowLeave"
-              @mousemove="onRowMove"
-            >
-              {{ String(index as number + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
-            </a>
+          <button
+            type="button"
+            class="section-tag accordion-toggle"
+            :aria-expanded="workOpen"
+            @click="toggleWork"
+          >Selected Work <span class="tag-right"><span class="tag-numeral">[02]</span><svg class="chevron" :class="{ 'is-open': workOpen }" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg></span></button>
+          <div class="accordion-panel" :class="{ 'is-open': workOpen }">
+            <div class="editorial-index">
+              <a
+                v-for="(item, index) in indexItems"
+                :key="item.title"
+                :href="item.url"
+                class="index-row"
+                target="_blank"
+                rel="noopener noreferrer"
+                @mouseenter="onRowEnter(index as number, $event)"
+                @mouseleave="onRowLeave"
+                @mousemove="onRowMove"
+              >
+                {{ String(index as number + 1).padStart(2, '0') }} / {{ item.title }} <span>{{ item.tag }}</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -141,23 +158,24 @@ function onRowMove(event: MouseEvent) {
         </div>
       </div>
       <nav class="nav-links">
-        <RouterLink to="/experience" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Experience</RouterLink>
+        <RouterLink to="/experience" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave"><span class="nav-full">Experience</span><span class="nav-short">Exp</span></RouterLink>
         <RouterLink to="/now" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Now</RouterLink>
         <RouterLink to="/me" class="nav-item" @mousemove="onMagneticMove($event, 0.4, 10)" @mouseleave="onMagneticLeave">Me</RouterLink>
       </nav>
       <a
         href="mailto:karlordr@gmail.com"
         class="cta-button"
+        aria-label="Get in touch by email"
         @mousemove="onMagneticMove($event, 0.3, 14)"
         @mouseleave="onMagneticLeave"
-      ><span>Get In Touch →</span></a>
+      ><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6.5 12 13 21 6.5M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </footer>
   </div>
 </template>
 
 <style scoped>
 .editorial-page {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -385,6 +403,12 @@ header {
   }
 }
 
+@media (max-width: 767px) {
+  .header-issue {
+    display: none;
+  }
+}
+
 main {
   display: grid;
   grid-template-columns: 1fr;
@@ -440,6 +464,12 @@ h1 .serif-alt {
 @media (max-width: 1023px) {
   h1 .serif-alt {
     font-size: clamp(22px, 5.6vw, 92px);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 .serif-alt {
+    font-size: 43px;
   }
 }
 
@@ -510,16 +540,63 @@ h1 .serif-alt.is-fading {
   color: #e8823a;
 }
 
+button.section-tag {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #080809;
+  border-radius: 0;
+  padding: 0 0 8px;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+  align-items: center;
+}
+
+.tag-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.chevron.is-open {
+  transform: rotate(180deg);
+}
+
 p {
   font-size: 14px;
   line-height: 1.7;
   color: #334155;
 }
 
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.accordion-panel.is-open {
+  max-height: 480px;
+}
+
 .editorial-index {
   display: flex;
   flex-direction: column;
   width: 100%;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.accordion-panel.is-open .editorial-index {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
 }
 
 .index-row {
@@ -568,6 +645,19 @@ footer {
   }
 }
 
+@media (max-width: 768px) {
+  footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: calc(100% + 64px);
+    margin: 0 -32px;
+    padding: 24px 20px;
+  }
+}
+
 .nav-links {
   display: flex;
   flex-wrap: wrap;
@@ -584,6 +674,25 @@ footer {
   position: relative;
   display: inline-block;
   transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-full,
+.nav-short {
+  font-weight: inherit;
+}
+
+.nav-short {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-full {
+    display: none;
+  }
+
+  .nav-short {
+    display: inline;
+  }
 }
 
 .nav-item::after {
@@ -607,20 +716,21 @@ footer {
 .cta-button {
   position: relative;
   overflow: hidden;
-  font-size: 12px;
-  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   color: #fcfbfa;
   background-color: #080809;
   text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  padding: 14px 32px;
-  width: max-content;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.cta-button span {
+.cta-button svg {
   position: relative;
   z-index: 1;
 }
@@ -647,7 +757,7 @@ footer {
 
 @media (max-width: 768px) {
   .editorial-page {
-    padding: 32px;
+    padding: 32px 32px 0;
   }
 }
 

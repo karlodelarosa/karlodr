@@ -39,7 +39,7 @@ const { phase } = useRouteTransition()
 
 .page-frame.idle {
   opacity: 1;
-  filter: blur(0);
-  transform: scale(1);
+  filter: none;
+  transform: none;
 }
 </style>

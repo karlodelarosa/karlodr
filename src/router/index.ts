@@ -10,6 +10,10 @@ import { useRouteTransition, wait } from '../composables/useRouteTransition'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
