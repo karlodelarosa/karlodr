@@ -42,13 +42,14 @@ useLiquidMetalText(canvasRef, stageRef, ['KRLABS'], (ready) => {
       </a>
     </div>
 
-    <main>
+    <main class="me-main">
       <div class="giant-name-stage" ref="stageRef">
         <canvas ref="canvasRef" class="liquid-canvas" aria-hidden="true"></canvas>
         <h1 class="giant-name" :class="{ 'is-hidden': canvasReady }">
           <span class="name-line">KRLABS</span>
         </h1>
       </div>
+      <p class="tagline">Keep Resolving. Keep Refining. Keep Reimagining.</p>
     </main>
 
     <footer class="contact-block">
@@ -56,6 +57,47 @@ useLiquidMetalText(canvasRef, stageRef, ['KRLABS'], (ready) => {
         <span class="contact-label">Phone</span>
         <a class="contact-value" href="tel:639511945392">+63 951 194 5392</a>
       </div>
+      <nav class="social-nav" aria-label="Social links">
+        <a
+          href="https://www.facebook.com/karlodelarosa"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-icon"
+          aria-label="Facebook"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M13.5 22v-8.4h2.8l.42-3.3h-3.22V8.2c0-.95.26-1.6 1.63-1.6h1.74V3.6a23 23 0 0 0-2.53-.13c-2.5 0-4.22 1.53-4.22 4.33v2.5H7v3.3h2.32V22h3.18Z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/karlo-dela-rosa/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-icon"
+          aria-label="LinkedIn"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.48v6.26ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://github.com/karlodelarosa"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-icon"
+          aria-label="GitHub"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.09 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"
+            />
+          </svg>
+        </a>
+      </nav>
       <div class="contact-row">
         <span class="contact-label">Email</span>
         <a class="contact-value" href="mailto:karlordr@gmail.com">karlordr@gmail.com</a>
@@ -65,6 +107,24 @@ useLiquidMetalText(canvasRef, stageRef, ['KRLABS'], (ready) => {
 </template>
 
 <style scoped>
+.me-main {
+  display: flex;
+  flex-direction: column;
+  position: relative
+}
+
+.me-main .tagline {
+  font-family: ui-monospace, monospace;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #565656;
+  font-weight: 600;
+  position: absolute;
+  bottom: 50px;
+  padding-inline: 32px;
+    text-align: center;
+}
+
 .me-page {
   height: 100vh;
   display: flex;
@@ -370,5 +430,29 @@ main {
 .contact-value:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.social-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #080809;
+  color: #080809;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-icon:hover {
+  background-color: #080809;
+  color: #fcfbfa;
+  transform: translateY(-2px);
 }
 </style>
