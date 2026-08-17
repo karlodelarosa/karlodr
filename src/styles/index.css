@@ -60,6 +60,17 @@ html {
   cursor: url('/crosshair.svg') 12 12, auto;
 }
 
+/* opt-in rem base for the "signal" home page — scoped to a class so other
+   pages keep their existing rem sizing */
+html.signal-root {
+  font-size: 112.5%;
+}
+@media (min-width: 720px) {
+  html.signal-root {
+    font-size: 125%;
+  }
+}
+
 html.custom-cursor-active,
 html.custom-cursor-active * {
   cursor: none !important;

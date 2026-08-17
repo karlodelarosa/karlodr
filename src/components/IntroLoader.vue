@@ -1,23 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { useIntroState } from '../composables/useIntroState'
+
+const { markIntroComplete, setIntroProgress } = useIntroState()
 
 const visible = ref(true)
 const exiting = ref(false)
 const progress = ref(0)
-const label = ref('INITIALIZING')
+const label = ref('ACQUIRING SIGNAL')
 
-const labels = ['INITIALIZING', 'LOADING SYSTEMS', 'COMPILING UI', 'ALMOST THERE']
-
-const cursor = reactive({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
-const target = { x: cursor.x, y: cursor.y }
-const FOLLOW_EASE = 0.07
+const labels = ['ACQUIRING SIGNAL', 'TUNING FREQUENCY', 'LOCKING CARRIER', 'ON AIR']
 
 let rafId = 0
-
-function handlePointerMove(e: PointerEvent) {
-  target.x = e.clientX
-  target.y = e.clientY
-}
 
 // pct/time keyframes; equal pct back-to-back = a freeze hold
 const KEYFRAMES = [
@@ -52,7 +46,6 @@ onMounted(() => {
   const duration = prefersReducedMotion ? 600 : KEYFRAMES[KEYFRAMES.length - 1].t
 
   document.body.style.overflow = 'hidden'
-  window.addEventListener('pointermove', handlePointerMove)
 
   const start = performance.now()
 
@@ -61,9 +54,7 @@ onMounted(() => {
     const pct = prefersReducedMotion ? Math.min(100, (elapsed / duration) * 100) : progressAt(elapsed)
     progress.value = Math.floor(pct)
     label.value = labels[Math.min(labels.length - 1, Math.floor((pct / 100) * labels.length))]
-
-    cursor.x += (target.x - cursor.x) * FOLLOW_EASE
-    cursor.y += (target.y - cursor.y) * FOLLOW_EASE
+    setIntroProgress(pct / 100)
 
     if (elapsed < duration) {
       rafId = requestAnimationFrame(tick)
@@ -75,11 +66,11 @@ onMounted(() => {
   function finish() {
     sessionStorage.setItem('kdr-intro-seen', '1')
     exiting.value = true
+    markIntroComplete()
     document.body.style.overflow = ''
-    window.removeEventListener('pointermove', handlePointerMove)
     setTimeout(() => {
       visible.value = false
-    }, 900)
+    }, 700)
   }
 
   rafId = requestAnimationFrame(tick)
@@ -87,7 +78,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   cancelAnimationFrame(rafId)
-  window.removeEventListener('pointermove', handlePointerMove)
   document.body.style.overflow = ''
 })
 </script>
@@ -96,25 +86,14 @@ onUnmounted(() => {
   <div v-if="visible" class="intro-loader" :class="{ 'is-exiting': exiting }">
     <div class="intro-grain" aria-hidden="true"></div>
 
-    <div class="intro-top">
-      <span class="intro-tag">SYS_INDEX // BOOT</span>
-      <span class="intro-tag">{{ label }}</span>
-      <span class="intro-tag">KARLO DELA ROSA</span>
-    </div>
-
-    <div
-      class="intro-percent-anchor"
-      :style="{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0)` }"
-    >
-      <div class="intro-percent">
-        {{ String(progress).padStart(2, '0') }}<span class="intro-percent-sign">%</span>
+    <div class="intro-inner">
+      <p class="intro-mark">K//D</p>
+      <div class="intro-meter">
+        <div class="intro-meter-fill" :style="{ width: progress + '%' }"></div>
       </div>
-    </div>
-
-    <div class="intro-bottom">
-      <div class="intro-bar-track">
-        <div class="intro-bar-fill" :style="{ width: progress + '%' }"></div>
-      </div>
+      <p class="intro-status">
+        {{ label }}<span class="intro-cursor" aria-hidden="true">_</span>
+      </p>
     </div>
   </div>
 </template>
@@ -125,25 +104,17 @@ onUnmounted(() => {
   inset: 0;
   z-index: 9999;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 48px 64px;
-  background-color: #fcfbfa;
-  color: #080809;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(8, 9, 12, 0.55);
+  color: #f2f3f7;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.7s ease 0.2s;
-}
-
-@media (max-width: 768px) {
-  .intro-loader {
-    padding: 28px 24px;
-  }
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  transition: opacity 0.6s var(--intro-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 .intro-loader.is-exiting {
-  transform: translateY(-100%);
-  opacity: 0.96;
+  opacity: 0;
 }
 
 .intro-grain {
@@ -151,89 +122,64 @@ onUnmounted(() => {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.06;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
-.intro-top {
-  display: flex;
-  justify-content: space-between;
-  z-index: 1;
-  font-family: ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #64748b;
-}
-
-@media (max-width: 768px) {
-  .intro-top .intro-tag:nth-child(3) {
-    display: none;
-  }
-}
-
-.intro-percent-anchor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.intro-percent {
-  display: flex;
-  align-items: flex-start;
-  transform: translate(-50%, -50%);
-  font-family: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-weight: 800;
-  font-size: clamp(120px, 24vw, 440px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(90deg, #3457e0, #8a2be2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-.intro-percent-sign {
-  font-size: 0.32em;
-  margin-left: 0.08em;
-  margin-top: 0.14em;
-}
-
-.intro-bottom {
+.intro-inner {
+  position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 1.1rem;
 }
 
-.intro-bar-track {
-  flex: 1;
+.intro-mark {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  color: #f2f3f7;
+  text-shadow: 0 1px 12px rgba(8, 9, 12, 0.8);
+}
+
+.intro-meter {
+  width: 11rem;
   height: 2px;
-  background-color: #e3e1da;
+  background: #23262d;
+  overflow: hidden;
 }
 
-.intro-bar-fill {
+.intro-meter-fill {
   height: 100%;
-  background: linear-gradient(90deg, #3457e0, #8a2be2);
+  background: linear-gradient(90deg, #2de6c8, #ff2d6a);
   transition: width 0.1s linear;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .intro-percent-anchor {
-    position: static;
-    transform: none !important;
-  }
+.intro-status {
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a8d98;
+  text-shadow: 0 1px 10px rgba(8, 9, 12, 0.8);
+}
 
-  .intro-percent {
-    transform: none;
-    display: block;
-    text-align: center;
-    margin: auto 0;
+.intro-cursor {
+  color: #2de6c8;
+  animation: intro-blink 0.7s steps(1) infinite;
+}
+
+@keyframes intro-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-cursor {
+    animation: none;
   }
 }
 </style>

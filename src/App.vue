@@ -1,12 +1,24 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import CustomCursor from './components/CustomCursor.vue'
 import IntroLoader from './components/IntroLoader.vue'
+import LiquidField from './components/signal/LiquidField.vue'
 import { useRouteTransition } from './composables/useRouteTransition'
+import { useIntroState } from './composables/useIntroState'
 
 const { phase } = useRouteTransition()
+const { introComplete, introProgress } = useIntroState()
+const route = useRoute()
+
+// lives here (not inside the home page) so the same WebGL instance carries
+// straight through the loader → hero handoff with zero remount/jump
+const showLiquidField = computed(() => route.name === 'home')
+const liquidIntensity = computed(() => (introComplete.value ? 1 : introProgress.value))
 </script>
 
 <template>
+  <LiquidField v-if="showLiquidField" :intensity="liquidIntensity" />
   <div class="page-frame" :class="phase">
     <router-view />
   </div>

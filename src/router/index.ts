@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeShell from '../pages/HomeShell.vue'
-import MePage from '../pages/MePage.vue'
-import RootExperience from '../pages/root/RootExperience.vue'
+import ProjectDetail from '../pages/ProjectDetail.vue'
 import RootLabs from '../pages/root/RootLabs.vue'
-import RootNow from '../pages/root/RootNow.vue'
 import RootLink from '../pages/root/RootLink.vue'
 import { useRouteTransition, wait } from '../composables/useRouteTransition'
 
@@ -24,35 +22,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/experience',
-      name: 'experience',
-      component: RootExperience,
-      meta: {
-        title: 'Experience — Karlo Dela Rosa',
-      },
-    },
-    {
       path: '/labs',
       name: 'labs',
       component: RootLabs,
       meta: {
         title: 'Labs — Karlo Dela Rosa',
-      },
-    },
-    {
-      path: '/now',
-      name: 'now',
-      component: RootNow,
-      meta: {
-        title: 'Now — Karlo Dela Rosa',
-      },
-    },
-    {
-      path: '/me',
-      name: 'me',
-      component: MePage,
-      meta: {
-        title: 'Me — Karlo Dela Rosa',
       },
     },
     {
@@ -64,24 +38,12 @@ const router = createRouter({
       },
     },
     {
-      path: '/classic',
-      redirect: { path: '/', query: { theme: 'classic' } },
-    },
-    {
-      path: '/new',
-      redirect: { path: '/', query: { theme: 'brutalist' } },
-    },
-    {
-      path: '/immersive',
-      redirect: { path: '/', query: { theme: 'immersive' } },
-    },
-    {
-      path: '/root',
-      redirect: { path: '/', query: { theme: 'root' } },
-    },
-    {
-      path: '/signal',
-      redirect: { path: '/', query: { theme: 'signal' } },
+      path: '/work/:slug',
+      name: 'work',
+      component: ProjectDetail,
+      meta: {
+        title: 'Work — Karlo Dela Rosa',
+      },
     },
   ],
 })
