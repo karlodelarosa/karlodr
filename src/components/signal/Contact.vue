@@ -23,7 +23,7 @@ const { playClick } = useSignalAudio()
           </LiquidText>
         </h2>
         <p class="contact-sub">
-          Open to composable commerce and full-stack web work — reach out about a project, a role, or just to say hi. Fastest way to reach me is email.
+          Open to composable commerce and full-stack web work. Reach out about a project, a role, or just to say hi — fastest way to reach me is email.
         </p>
 
         <a

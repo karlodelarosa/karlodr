@@ -4,12 +4,12 @@
 export const profile = {
   name: 'Karlo Dela Rosa',
   role: 'Web Developer',
-  location: 'Bulacan, Philippines — remote-friendly',
+  location: 'Bulacan, Philippines — remote',
   tagline:
     'I work where signal meets noise: composable commerce, worship tech, and the creative interfaces that bring them to life.',
   bio: [
-    'Most of my time goes into composable commerce and CMS work — React and Next.js storefronts, Vue and Laravel systems, whatever the stack actually needs. Keep resolving, keep refining, keep reimagining — that’s the loop, on a checkout flow or anything else.',
-    'Right now that means building Lyric Lens and Ministry Lens for my church — tools for running Sunday service without the usual scramble — plus teaching myself Three.js and creative engineering on the side.',
+    'Most of my time goes into composable commerce and CMS work — React and Next.js storefronts, Vue and Laravel systems, whatever the stack actually needs.',
+    'Right now that means building Lyric Lens and Ministry Lens for my church, tools for running Sunday service without the usual scramble. Teaching myself Three.js and creative engineering on the side too.',
   ],
   email: 'karlordr@gmail.com',
   socials: [
@@ -22,7 +22,7 @@ export const profile = {
 export const stats = [
   { value: '2017', unit: '', label: 'building on the web since' },
   { value: '5', unit: '', label: 'roles — e-commerce, CMS & real-time' },
-  { value: '4', unit: '', label: 'builds shipped for ELGC, and counting' },
+  { value: '4', unit: '', label: 'builds shipped for ELGC' },
 ]
 
 export type Project = {
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     name: 'Ministry Lens',
     summary: 'SaaS church management system — scheduling, teams, and Sunday operations.',
     description:
-      'A multi-tenant platform for churches to run ministry scheduling, teams, and day-to-day operations from one place — currently in production, with Emmanuel’s Living Gospel Church as its first organization.',
+      'A multi-tenant platform for churches to run ministry scheduling, teams, and day-to-day operations from one place. Currently in production, with Emmanuel’s Living Gospel Church as its first organization.',
     stack: ['React', 'JavaScript', 'Supabase', 'Cloudflare Workers'],
     slug: 'ministry-lens',
     url: 'https://ministrylens.elgchurch.com/',
@@ -58,7 +58,7 @@ export const projects: Project[] = [
     name: 'Lyric Lens',
     summary: 'SaaS worship platform for real-time lyrics and service lineups.',
     description:
-      'A multi-org worship platform for cueing songs and running live lyric presentations during service — any church can spin up an organization, with ELGC as its first live user.',
+      'A multi-org worship platform for cueing songs and running live lyric presentations during service. Any church can spin up an organization; ELGC is the first live user.',
     stack: ['React', 'JavaScript', 'Supabase', 'Cloudflare Workers'],
     slug: 'lyric-lens',
     url: 'https://lyriclens.elgchurch.com/',
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     name: 'Music Playground',
     summary: 'Gamified music-theory trainer — note recognition, ear training, chords.',
     description:
-      'A browser-based music playground with XP-gated modes — Find the Note, Echo Mode, Memory Mode, Chord Builder, Ear Training — built to make basic music theory click one note at a time.',
+      'A browser-based music playground with XP-gated modes (Find the Note, Echo Mode, Memory Mode, Chord Builder, Ear Training), built to make basic music theory click one note at a time.',
     stack: ['Vue'],
     slug: 'music-playground',
     url: 'https://music-playground.pages.dev/',
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     name: 'Emmanuel’s Living Gospel Church',
     summary: 'Church website — gatherings, life groups, and events for ELGC.',
     description:
-      'The public home for ELGC in Caloocan — service times, life-group fellowships, upcoming events, and a way for new visitors to find their way in the door.',
+      'The public home for ELGC in Caloocan: service times, life-group fellowships, upcoming events, and a way for new visitors to find their way in the door.',
     stack: ['Vue', 'Vite', 'Tailwind'],
     slug: 'elgc-church',
     url: 'https://elgchurch.com/',
@@ -101,7 +101,7 @@ export type SkillGroup = {
 export const skills: SkillGroup[] = [
   { label: 'Frontend', items: ['React', 'Next.js', 'Vue', 'JavaScript'] },
   { label: 'Backend', items: ['PHP', 'Laravel', 'Node.js', 'MySQL'] },
-  { label: 'Platforms', items: ['Sanity', 'Contentful', 'Stripe', 'commercetools', 'Google Cloud', 'CI/CD'] },
+  { label: 'Platforms', items: ['Sanity', 'Contentful', 'Stripe', 'Commercetools', 'Google Cloud', 'CI/CD'] },
   { label: 'Practice', items: ['Composable Commerce', 'WebRTC', 'Creative Engineering'] },
   { label: '3D & Motion', items: ['Three.js', 'WebGL', 'GSAP', 'Blender', 'Higgsfield'] },
   { label: 'AI Tools', items: ['Claude AI', 'ChatGPT', 'Gemini', 'Cursor', 'GitHub Copilot'] },
@@ -121,44 +121,34 @@ export const log: LogEntry[] = [
     org: 'Composable Commerce',
     role: 'Consultant',
     stack: ['React', 'Next.js', 'JavaScript', 'E-commerce', 'CMS'],
-    notes: [
-      'Helping businesses build, optimize, and scale composable e-commerce solutions with modern web technologies',
-    ],
+    notes: ['Freelance work on composable storefronts — React/Next.js frontends wired to headless commerce backends'],
   },
   {
     period: '2021 — 2023',
     org: 'B2B Software',
     role: 'Lead Developer',
     stack: ['Vue', 'PHP', 'Laravel', 'Node.js', 'CI/CD', 'Google Cloud', 'MySQL'],
-    notes: [
-      'Led a development team, driving technical planning, code quality, and standardized CI/CD deployment workflows',
-    ],
+    notes: ['Led a small dev team — technical planning, code review, and setting up our CI/CD pipeline'],
   },
   {
     period: '2020 — 2021',
     org: 'Agency / CMS Solutions',
     role: 'Frontend Developer',
     stack: ['HubSpot', 'WordPress', 'Node.js', 'JavaScript'],
-    notes: [
-      'Built high-performing marketing websites and reusable component libraries across HubSpot and WordPress projects',
-    ],
+    notes: ['Built marketing sites and component libraries on HubSpot and WordPress for agency clients'],
   },
   {
     period: '2018 — 2020',
     org: 'Real-Time Communications',
     role: 'Senior Web Developer',
     stack: ['WebRTC', 'JavaScript', 'Vue'],
-    notes: [
-      'Owned full-stack development for a WebRTC platform while mentoring junior developers and improving engineering practices',
-    ],
+    notes: ['Full-stack on a WebRTC platform, plus mentoring the junior devs on the team'],
   },
   {
     period: '2017 — 2018',
     org: 'ESL Platform',
     role: 'Web Developer',
     stack: ['PHP', 'Laravel', 'MySQL'],
-    notes: [
-      'Developed and maintained complex features for an ESL learning platform, contributing across the full application stack',
-    ],
+    notes: ['Built and maintained features for an ESL learning platform, front to back'],
   },
 ]

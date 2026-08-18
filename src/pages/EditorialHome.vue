@@ -40,7 +40,7 @@ onUnmounted(() => document.documentElement.classList.remove('signal-root'))
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Unbounded/Inter/JetBrains Mono are loaded via index.html's <link> tag */
 
 .signal-home {
   --void: #08090c;

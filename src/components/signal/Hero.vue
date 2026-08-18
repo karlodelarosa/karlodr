@@ -15,7 +15,7 @@ const { playClick } = useSignalAudio()
     <div class="wrap hero-inner" :class="{ 'is-revealed': introComplete }">
       <p class="tag">
         <span class="dot" aria-hidden="true"></span>
-        {{ profile.location }} · on air
+        {{ profile.location }}
       </p>
 
       <h1 class="hero-name">
