@@ -8,8 +8,7 @@ export const profile = {
   tagline:
     'I work where signal meets noise: composable commerce, worship tech, and the creative interfaces that bring them to life.',
   bio: [
-    'Most of my time goes into composable commerce and CMS work — React and Next.js storefronts, Vue and Laravel systems, whatever the stack actually needs.',
-    'Right now that means building Lyric Lens and Ministry Lens for my church, tools for running Sunday service without the usual scramble. Teaching myself Three.js and creative engineering on the side too.',
+    'Web developer specializing in composable commerce and CMS platforms, with adaptable expertise across React/Next.js and Vue/Laravel systems. I actively build real-time software tools (Lyric Lens, Ministry Lens) for live events, while currently expanding my skill set into creative engineering.',
   ],
   email: 'karlordr@gmail.com',
   socials: [
@@ -104,7 +103,7 @@ export const skills: SkillGroup[] = [
   { label: 'Platforms', items: ['Sanity', 'Contentful', 'Stripe', 'Commercetools', 'Google Cloud', 'CI/CD'] },
   { label: 'Practice', items: ['Composable Commerce', 'WebRTC', 'Creative Engineering'] },
   { label: '3D & Motion', items: ['Three.js', 'WebGL', 'GSAP', 'Blender', 'Higgsfield'] },
-  { label: 'AI Tools', items: ['Claude AI', 'ChatGPT', 'Gemini', 'Cursor', 'GitHub Copilot'] },
+  { label: 'AI & Automation', items: ['Claude (Script Automation)', 'Cursor', 'Copilot', 'ChatGPT', 'Gemini'] },
 ]
 
 export type LogEntry = {
@@ -119,36 +118,36 @@ export const log: LogEntry[] = [
   {
     period: 'Present',
     org: 'Composable Commerce',
-    role: 'Consultant',
+    role: 'Senior Web Developer',
     stack: ['React', 'Next.js', 'JavaScript', 'E-commerce', 'CMS'],
-    notes: ['Freelance work on composable storefronts — React/Next.js frontends wired to headless commerce backends'],
+    notes: ['Build composable storefronts by wiring React/Next.js frontends to headless commerce backends, leveraging AI helper tools to rapidly debug and resolve system errors'],
   },
   {
     period: '2021 — 2023',
     org: 'B2B Software',
     role: 'Lead Developer',
     stack: ['Vue', 'PHP', 'Laravel', 'Node.js', 'CI/CD', 'Google Cloud', 'MySQL'],
-    notes: ['Led a small dev team — technical planning, code review, and setting up our CI/CD pipeline'],
+    notes: ["Led a dev team building B2B software. Drove technical planning, established code review standards, and implemented a CI/CD pipeline that streamlined deployments"],
   },
   {
     period: '2020 — 2021',
     org: 'Agency / CMS Solutions',
     role: 'Frontend Developer',
     stack: ['HubSpot', 'WordPress', 'Node.js', 'JavaScript'],
-    notes: ['Built marketing sites and component libraries on HubSpot and WordPress for agency clients'],
+    notes: ['Engineered custom marketing sites and reusable component libraries on HubSpot and WordPress, accelerating project delivery for multiple agency clients'],
   },
   {
     period: '2018 — 2020',
     org: 'Real-Time Communications',
     role: 'Senior Web Developer',
     stack: ['WebRTC', 'JavaScript', 'Vue'],
-    notes: ['Full-stack on a WebRTC platform, plus mentoring the junior devs on the team'],
+    notes: ["Built full-stack features for a real-time WebRTC platform and mentored junior developers to level up the team's Vue and JavaScript standards"],
   },
   {
     period: '2017 — 2018',
     org: 'ESL Platform',
     role: 'Web Developer',
     stack: ['PHP', 'Laravel', 'MySQL'],
-    notes: ['Built and maintained features for an ESL learning platform, front to back'],
+    notes: ['Built and maintained end-to-end features for a high-traffic ESL learning platform using PHP and Laravel'],
   },
 ]

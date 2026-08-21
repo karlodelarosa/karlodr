@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { profile } from '../../data/signal'
 import LiquidText from './LiquidText.vue'
 import { useScrollReveal } from '../../composables/useScrollReveal'
@@ -38,6 +39,17 @@ const { playClick } = useSignalAudio()
         </a>
 
         <ul class="socials">
+          <li>
+            <RouterLink
+              to="/cv"
+              class="mono"
+              data-tune
+              @mousemove="onMagneticMove($event, 0.3, 8)"
+              @mouseleave="onMagneticLeave"
+              @click="playClick"
+              >CV</RouterLink
+            >
+          </li>
           <li v-for="s in profile.socials" :key="s.label">
             <a
               :href="s.href"

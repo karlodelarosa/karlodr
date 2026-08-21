@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeShell from '../pages/HomeShell.vue'
 import ProjectDetail from '../pages/ProjectDetail.vue'
+import CV from '../pages/CV.vue'
 import RootLabs from '../pages/root/RootLabs.vue'
 import RootLink from '../pages/root/RootLink.vue'
 import { useRouteTransition, wait } from '../composables/useRouteTransition'
@@ -43,6 +44,14 @@ const router = createRouter({
       component: ProjectDetail,
       meta: {
         title: 'Work — Karlo Dela Rosa',
+      },
+    },
+    {
+      path: '/cv',
+      name: 'cv',
+      component: CV,
+      meta: {
+        title: 'CV — Karlo Dela Rosa',
       },
     },
   ],
